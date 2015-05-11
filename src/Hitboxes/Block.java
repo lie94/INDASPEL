@@ -6,7 +6,7 @@ import navigation.Coord;
 
 
 public abstract class Block extends Hitbox{
-	Block(Coord c, int width, int height) {
+	protected Block(Coord c, int width, int height) {
 		super(c, width, height);
 		// TODO Auto-generated constructor stub
 	}

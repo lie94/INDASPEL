@@ -15,6 +15,10 @@ public class SafeBlockPath extends SafeBlock {
 		super(path[0]);
 		init(path);
 	}
+	public SafeBlockPath(int width, int height, Coord ... path){
+		super(width,height,path[0]);
+		init(path);
+	}
 	/**
 	 * Sets the speed the block should be moving at.
 	 * @param speed

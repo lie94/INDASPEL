@@ -10,6 +10,10 @@ public abstract class SafeBlock extends Block{
 		super(c);
 		passable = false;
 	}
+	public SafeBlock(int width, int height, Coord c) {
+		super(c,width,height);
+		passable = false;
+	}
 	public boolean getPassable(){
 		return passable;
 	}

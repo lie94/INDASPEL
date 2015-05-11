@@ -1,7 +1,9 @@
 import hitboxes.Player;
 import hitboxes.killblocks.KillBlock;
 import hitboxes.safeblocks.SafeBlock;
+import hitboxes.safeblocks.SafeBlockPath;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -18,8 +20,15 @@ public class Map {
 	Map(BufferedImage background, Coord spawn){
 		this.background = background;
 		this.spawn = spawn;
+		init();
+	}
+	private void init(){
 		killblocks = new ArrayList<KillBlock>();
 		safeblocks = new ArrayList<SafeBlock>();
+		safeblocks.add(new SafeBlockPath(Map.WIDTH + 100, 100,	new Coord(-100, 	Map.HEIGHT)	).setColor(Color.BLACK)); //0
+		safeblocks.add(new SafeBlockPath(100, Map.HEIGHT + 100,	new Coord(-100,		-100)		).setColor(Color.BLACK)); //1
+		safeblocks.add(new SafeBlockPath(Map.WIDTH + 100, 100,	new Coord(-100,		-100)		).setColor(Color.BLACK)); //2
+		safeblocks.add(new SafeBlockPath(100, Map.HEIGHT + 100,	new Coord(Map.WIDTH,-100)		).setColor(Color.BLACK)); //3
 	}
 	Map(){}
 	public Coord getSpawn(){
@@ -35,8 +44,7 @@ public class Map {
 	 * Clears all killblocks and safeblocks on the map
 	 */
 	public void removeAll(){
-		killblocks = new ArrayList<KillBlock>();
-		safeblocks = new ArrayList<SafeBlock>();
+		init();
 	}
 	public void draw(Graphics g){
 		g.drawImage(background,0,0,WIDTH,HEIGHT,null);
