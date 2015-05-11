@@ -1,8 +1,8 @@
-package Hitboxes;
+package hitboxes;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import nav.Coord;
+import navigation.Coord;
 
 
 public abstract class Block extends Hitbox{
