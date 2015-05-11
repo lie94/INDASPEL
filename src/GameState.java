@@ -1,11 +1,12 @@
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
+import killblocks.KillBlockPath;
 import nav.Coord;
-import nav.Vector;
 import Hitboxes.KillBlock;
 import Hitboxes.Player;
 
@@ -25,19 +26,7 @@ public class GameState {
 		maps = new Map[1];
 		try {
 			maps[0] = new Map(ImageIO.read(this.getClass().getResource("/res/images/bg1.jpg")),new Coord(0,0));
-			KillBlock temp = new KillBlock(new Coord(500,500));
-			temp.setCycle(100);
-			temp.setDir(new Vector(1,3));
-			maps[0].add(temp);
-			/*temp = new Block(700,300,100,100);
-			temp.setMoving(true);
-			maps[0].add(temp);
-			temp = new Block(900,700,100,100);
-			temp.setMoving(true);
-			maps[0].add(temp);
-			temp = new Block(300,100,100,100);
-			temp.setMoving(true);
-			maps[0].add(temp);*/
+			resetToMap(0);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -54,7 +43,7 @@ public class GameState {
 	}
 	public void update(){
 		if(currentMap.isTouchingKB(player)){
-			player.setC(currentMap.getSpawn());
+			resetToMap(Arrays.asList(maps).indexOf(currentMap));
 		}
 		// TODO UPDATE THE ENVIROMENT
 		for(KillBlock kb : currentMap.killblocks){
@@ -103,6 +92,17 @@ public class GameState {
 			default:
 			}	
 		}
-		
+	}
+	private void resetToMap(int i){
+		player.setC(maps[i].getSpawn());
+		maps[i].removeAll();
+		switch(i){
+		case 0:
+			maps[0].add(new KillBlockPath(new Coord(320,180), new Coord(960,540), new Coord(960,180),  new Coord(320,540)));
+			maps[0].add(new KillBlockPath(new Coord(320,0), new Coord(640,Map.HEIGHT - KillBlock.STD_HEIGHT)));
+			maps[0].add(new KillBlockPath(new Coord(960,0), new Coord(640,Map.HEIGHT - KillBlock.STD_HEIGHT)));
+			maps[0].add(new KillBlockPath(new Coord(0,360 + KillBlock.STD_HEIGHT / 2), new Coord(1280 - KillBlock.STD_WIDTH,360 + KillBlock.STD_HEIGHT)));
+			break;
+		}
 	}
 }

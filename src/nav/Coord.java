@@ -1,8 +1,12 @@
 package nav;
 
 public class Coord {
-	protected int x, y;
+	protected double x, y;
 	public Coord(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	public Coord(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -26,13 +30,16 @@ public class Coord {
 		this.y = y;
 	}
 	public int getX(){
-		return x;
+		return (int) x;
 	}
 	public int getY(){
-		return y;
+		return (int) y;
+	}
+	public Vector sub(Coord c){
+		return new Vector(getX() - c.getX(), getY() - c.getY());
 	}
 	public String toString(){
-		return "(" + x + ", " + y + ")";
+		return "(" + (int) x + ", " + (int) y + ")";
 	}
 	public Coord clone(){
 		return new Coord(x,y);

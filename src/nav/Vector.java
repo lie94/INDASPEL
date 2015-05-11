@@ -7,6 +7,12 @@ public class Vector extends Coord{
 	public Vector(){
 		super(0,0);
 	}
+	public Vector(double x, double y){
+		super(x,y);
+	}
+	public Vector(Coord c){
+		super(c);
+	}
 	/**
 	 * Hit a surface and bounce of it.
 	 * dir indicates which direction the surface is
@@ -34,5 +40,19 @@ public class Vector extends Coord{
 	}
 	public double length(){
 		return Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
+	}
+	public Vector norm(){
+		double length = length();
+		x /= length;
+		y /= length;
+		return this;
+	}
+	public Vector multiply(int i){
+		x *= i;
+		y *= i;
+		return this;
+	}
+	public Vector clone(){
+		return new Vector(x,y);
 	}
 }

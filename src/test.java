@@ -36,4 +36,9 @@ public class test extends TestCase{
 		assertEquals(v.toString(),"(-3, -4)");
 		assertTrue(c.add(v).equals(new Coord(-1,7)));
 	}
+	public void testCoord(){
+		Coord c1 = new Coord(2,4);
+		Coord c2 = new Coord(4,2);
+		assertTrue(new Coord(2.0,-2.0).equals(c2.sub(c1)));
+	}
 }

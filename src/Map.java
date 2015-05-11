@@ -24,18 +24,7 @@ public class Map {
 	public void add(KillBlock kb){
 		killblocks.add(kb);
 	}
-	public void add(Coord c, int width, int height){
-		killblocks.add(new KillBlock(c,width,height));
-	}
-	public void add(Coord c){
-		killblocks.add(new KillBlock(c));
-	}
-	/**
-	 * Add a wall facing the desired direction
-	 * @param dir 
-	 * @param coordinate
-	 * @throws IllegalArgumentException
-	 */
+	/*
 	public void addKB(int dir, int coordinate) throws IllegalArgumentException{
 		switch(dir){
 		case 0:
@@ -53,6 +42,9 @@ public class Map {
 		default:
 			throw new IllegalArgumentException("dir must be one of {0,1,2,3}");
 		}
+	}*/
+	public void removeAll(){
+		killblocks = new ArrayList<KillBlock>();
 	}
 	public void draw(Graphics g){
 		g.drawImage(background,0,0,WIDTH,HEIGHT,null);
