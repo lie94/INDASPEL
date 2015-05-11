@@ -16,6 +16,9 @@ public class KillBlock extends Block{
 		super(path[0]);
 		init(path);
 	}
+	protected KillBlock(){
+		super(new Coord(0,0));
+	}
 	private void init(Coord[] path){
 		this.path = path;
 		color = Color.BLACK;
