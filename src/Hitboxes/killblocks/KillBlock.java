@@ -1,8 +1,8 @@
-package hitboxes.killblocks;
+package Hitboxes.killblocks;
 
 
-import hitboxes.Block;
-import navigation.Coord;
+import Hitboxes.Block;
+import nav.Coord;
 
 public abstract class KillBlock extends Block{
 

@@ -1,7 +1,7 @@
-import hitboxes.Hitbox;
-import hitboxes.Player;
-import navigation.Coord;
-import navigation.Vector;
+import nav.Coord;
+import nav.Vector;
+import Hitboxes.Hitbox;
+import Hitboxes.Player;
 import junit.framework.TestCase;
 
 
@@ -9,10 +9,10 @@ public class test extends TestCase{
 	public void testShareHitbox(){
 		Player a = new Player(new Coord(0,0),120,120);
 		Player b = new Player(new Coord(60,60),120,120);
-		assertTrue(a.contains(new Coord(0, 0)));
-		assertFalse(a.contains(new Coord(121, 121)));
-		assertTrue(a.contains(new Coord(0, 120)));
-		assertFalse(b.contains(new Coord(0, 0)));
+		assertTrue(a.coordInHitbox(0, 0));
+		assertFalse(a.coordInHitbox(121, 121));
+		assertTrue(a.coordInHitbox(0, 120));
+		assertFalse(b.coordInHitbox(0, 0));
 		
 		assertTrue(a.shareHitbox(b));
 		assertTrue(Hitbox.shareHitbox(a, b));
@@ -20,7 +20,7 @@ public class test extends TestCase{
 	}
 	public void testMoveChar(){
 		Player a = new Player(new Coord(0,0),120,120);
-		a.setCoord(new Coord(100,0));
+		a.setX(100);
 		assertEquals(100,a.getX());
 		a.increaseX(10);
 		assertEquals(110,a.getX());

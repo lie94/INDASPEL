@@ -1,4 +1,4 @@
-package navigation;
+package nav;
 
 public class Vector extends Coord{
 	public Vector(int x, int y){

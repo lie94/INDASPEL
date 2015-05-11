@@ -1,9 +1,9 @@
-package hitboxes.killblocks;
+package Hitboxes.killblocks;
 
 import java.awt.Color;
 
-import navigation.Coord;
-import navigation.Vector;
+import nav.Coord;
+import nav.Vector;
 
 public class KillBlockCycle extends KillBlockPath {
 	public KillBlockCycle(Coord ... path){
@@ -14,6 +14,24 @@ public class KillBlockCycle extends KillBlockPath {
 		index = 0;
 		last_index = 0;
 		refresh();
+	}
+	private void refresh(){
+		if(path.length == 1){
+			return;
+		}
+		dirs = new Vector[path.length];
+		max = new int[path.length];
+		Vector v;
+		if(speed != 0){
+			for(int i = 0; i < path.length - 1; i++){
+				v = path[i + 1].sub(path[i]);
+				dirs[i] = (v.clone().norm().multiply(speed));
+				max[i] = ((int) v.length() / speed);
+			}
+			v = path[0].sub(path[path.length - 1]);
+			dirs[dirs.length - 1] = v.clone().norm().multiply(speed);
+			max[max.length - 1] = (int) (v.length() / speed);
+		}
 	}
 	public KillBlockCycle setSpeed(int speed){
 		this.speed = speed;
@@ -34,24 +52,6 @@ public class KillBlockCycle extends KillBlockPath {
 			if(index == max.length){
 				index = 0;
 			}
-		}
-	}
-	private void refresh(){
-		if(path.length == 1){
-			return;
-		}
-		dirs = new Vector[path.length];
-		max = new int[path.length];
-		Vector v;
-		if(speed != 0){
-			for(int i = 0; i < path.length - 1; i++){
-				v = path[i + 1].sub(path[i]);
-				dirs[i] = (v.clone().norm().multiply(speed));
-				max[i] = ((int) v.length() / speed);
-			}
-			v = path[0].sub(path[path.length - 1]);
-			dirs[dirs.length - 1] = v.clone().norm().multiply(speed);
-			max[max.length - 1] = (int) (v.length() / speed);
 		}
 	}
 }
