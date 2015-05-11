@@ -1,9 +1,9 @@
-package Hitboxes.safeblocks;
+package hitboxes.safeblocks;
 
 import java.awt.Color;
 
-import nav.Coord;
-import nav.Vector;
+import navigation.Coord;
+import navigation.Vector;
 
 public class SafeBlockPath extends SafeBlock {
 	Coord[] path;
@@ -11,37 +11,15 @@ public class SafeBlockPath extends SafeBlock {
 	int[] max;
 	int speed = 8, index, last_index, count;
 	
-	
-	SafeBlockPath(Coord ... path){
+	public SafeBlockPath(Coord ... path){
 		super(path[0]);
 		init(path);
 	}
-	private void init(Coord[] path){
-		this.path = path;
-		color = Color.GREEN;
-		count = 0;
-		index = 0;
-		last_index = 0;
-		refresh();
-	}
 	/**
-	 * Refreshes the path arrayList
+	 * Sets the speed the block should be moving at.
+	 * @param speed
+	 * @return
 	 */
-	private void refresh(){
-		if(path.length == 1){
-			return;
-		}
-		dirs = new Vector[path.length - 1];
-		max = new int[path.length - 1];
-		Vector v;
-		if(speed != 0){
-			for(int i = 0; i < path.length - 1; i++){
-				v = path[i + 1].sub(path[i]);
-				dirs[i] = (v.clone().norm().multiply(speed));
-				max[i] = ((int) v.length() / speed);
-			}
-		}
-	}
 	public SafeBlockPath setSpeed(int speed){
 		this.speed = speed;
 		refresh();
@@ -80,6 +58,9 @@ public class SafeBlockPath extends SafeBlock {
 		count = (int) (max[index - 1] * p);
 		return this;
 	}
+	/**
+	 * Moves the block if necessary
+	 */
 	public void update() {
 		if(path.length == 1){
 			return;
@@ -92,10 +73,57 @@ public class SafeBlockPath extends SafeBlock {
 			changeIndex();
 		}
 	}
+	/**
+	 * Changes if the player can pass through the block
+	 * @param b
+	 * @return
+	 */
+	public SafeBlockPath setPassable(boolean b){
+		passable = b;
+		return this;
+	}
+	/**
+	 * Changes the color of the block
+	 * @param c
+	 * @return
+	 */
 	public SafeBlockPath setColor(Color c){
 		color = c;
 		return this;
 	}
+	/**
+	 * Initiates the block
+	 * @param path
+	 */
+	private void init(Coord[] path){
+		this.path = path;
+		color = Color.GREEN;
+		count = 0;
+		index = 0;
+		last_index = 0;
+		refresh();
+	}
+	/**
+	 * Refreshes the path arrayList
+	 */
+	private void refresh(){
+		if(path.length == 1){
+			return;
+		}
+		dirs = new Vector[path.length - 1];
+		max = new int[path.length - 1];
+		Vector v;
+		if(speed != 0){
+			for(int i = 0; i < path.length - 1; i++){
+				v = path[i + 1].sub(path[i]);
+				dirs[i] = (v.clone().norm().multiply(speed));
+				max[i] = ((int) v.length() / speed);
+			}
+		}
+	}
+	/**
+	 * Changes which vector should be used
+	 */
 	private void changeIndex(){
 		if(max.length == 1){
 			flip();
@@ -123,6 +151,10 @@ public class SafeBlockPath extends SafeBlock {
 			index++;
 		}
 	}
+	/**
+	 * Flips all vectors in the dirs-array
+	 * Used when the block walks back the same path
+	 */
 	private void flip(){
 		for(Vector v : dirs){
 			v.antiDir();

@@ -1,6 +1,6 @@
-package Hitboxes;
+package hitboxes;
 
-import nav.Coord;
+import navigation.Coord;
 
 
 public abstract class Hitbox{
@@ -17,6 +17,14 @@ public abstract class Hitbox{
 		this.width = width;
 		this.height = height;
 	}
+	protected boolean contains(Coord ... coords){
+		for(Coord p : coords){
+			if(!this.contains(p)){
+				return false;
+			}
+		}
+		return true;
+	}
 	/**
 	 * Checks if the point (x,y) is in the area of a
 	 * @param x
@@ -24,13 +32,21 @@ public abstract class Hitbox{
 	 * @param a
 	 * @return
 	 */
-	public static boolean coordInHitbox(int x, int y, Hitbox h){
+	public static boolean contains(Coord c, Hitbox h){
+		int x = c.getX();
+		int y = c.getY();
 		if(h.getX() <= x && h.getY() <= y && h.getY() + h.getHeight() >= y && h.getX() + h.getWidth() >= x)
 			return true;
 		return false;
 	}
-	public boolean coordInHitbox(int x, int y){
-		return coordInHitbox(x,y,this);
+	/**
+	 * Checks if the coord is in "this" hitbox
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean contains(Coord c){
+		return contains(c,this);
 	}
 	/**
 	 * Checks if hitbox a and hitbox b share area

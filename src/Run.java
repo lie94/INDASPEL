@@ -69,6 +69,18 @@ public class Run extends Canvas implements Runnable,KeyListener{
 		
 		
 	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		gs.send(e,true);
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		gs.send(e,false);
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {}
 	private void render() {
 		BufferStrategy bs = getBufferStrategy();
 		if(bs == null){
@@ -86,16 +98,4 @@ public class Run extends Canvas implements Runnable,KeyListener{
 		gs = new GameState();
 		
 	}
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		gs.send(e,true);
-	}
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		gs.send(e,false);
-	}
-	@Override
-	public void keyTyped(KeyEvent e) {}
 }

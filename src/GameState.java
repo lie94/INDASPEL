@@ -1,3 +1,10 @@
+import hitboxes.Player;
+import hitboxes.killblocks.KillBlock;
+import hitboxes.killblocks.KillBlockCycle;
+import hitboxes.killblocks.KillBlockPath;
+import hitboxes.safeblocks.SafeBlock;
+import hitboxes.safeblocks.SafeBlockPath;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -6,11 +13,7 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
-import nav.Coord;
-import Hitboxes.Player;
-import Hitboxes.killblocks.KillBlock;
-import Hitboxes.killblocks.KillBlockCycle;
-import Hitboxes.killblocks.KillBlockPath;
+import navigation.Coord;
 
 
 public class GameState {
@@ -36,13 +39,24 @@ public class GameState {
 		
 		
 	}
+	/**
+	 * Draws everything on that is happening on the current map
+	 * @param g
+	 */
 	public void draw(Graphics g){
 		currentMap.draw(g);
+		player.draw(g);
 		for(KillBlock kb : currentMap.killblocks){
 			kb.draw(g);
 		}
-		player.draw(g);
+		for(SafeBlock sb : currentMap.safeblocks){
+			sb.draw(g);
+		}
+		
 	}
+	/**
+	 * Updates everything that is happening on the current map
+	 */
 	public void update(){
 		if(currentMap.isTouchingKB(player)){
 			resetToMap(Arrays.asList(maps).indexOf(currentMap));
@@ -55,9 +69,16 @@ public class GameState {
 				player.move(i);
 			}
 		}
-		player.update();
-		
+		for(SafeBlock sb : currentMap.safeblocks){
+			sb.update();
+			sb.playerColiding(player);
+		}
 	}
+	/**
+	 * Recives a keyevent and translates it to how the player should be moved
+	 * @param e
+	 * @param keyPress
+	 */
 	public void send(KeyEvent e, boolean keyPress){
 		//System.out.println(e.getKeyCode());
 		if(keyPress){
@@ -94,17 +115,24 @@ public class GameState {
 			}	
 		}
 	}
+	/**
+	 * Resets/Initiates the map with index i
+	 * @param i
+	 */
 	private void resetToMap(int i){
 		player.setC(maps[i].getSpawn());
 		maps[i].removeAll();
 		switch(i){
 		case 0:
-			maps[0].add(new KillBlockCycle(new Coord(250,250), new Coord(500,250), new Coord(500,500), new Coord(250,500)).setColor(Color.CYAN).setSpeed(4));
+			// Safeblocks
+			maps[0].add(new SafeBlockPath(new Coord(300,300), new Coord(1000,600)));
+			// Killblocks
+			/*maps[0].add(new KillBlockCycle(new Coord(250,250), new Coord(500,250), new Coord(500,500), new Coord(250,500)).setColor(Color.CYAN).setSpeed(4));
 			maps[0].add(new KillBlockPath(new Coord(500,500)));
 			maps[0].add(new KillBlockPath(new Coord(320,180), new Coord(960,540), new Coord(960,180),  new Coord(320,540)));
 			maps[0].add(new KillBlockPath(new Coord(320,0), new Coord(640,Map.HEIGHT - KillBlock.STD_HEIGHT)).setPercent(50).setColor(Color.BLUE));
 			maps[0].add(new KillBlockPath(new Coord(960,0), new Coord(640,Map.HEIGHT - KillBlock.STD_HEIGHT)));
-			maps[0].add(new KillBlockPath(new Coord(0,360 + KillBlock.STD_HEIGHT / 2), new Coord(1280 - KillBlock.STD_WIDTH,360 + KillBlock.STD_HEIGHT)).setPercent(90).setColor(Color.MAGENTA));
+			maps[0].add(new KillBlockPath(new Coord(0,360 + KillBlock.STD_HEIGHT / 2), new Coord(1280 - KillBlock.STD_WIDTH,360 + KillBlock.STD_HEIGHT)).setPercent(90).setColor(Color.MAGENTA));*/
 			break;
 		}
 	}

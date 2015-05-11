@@ -1,21 +1,25 @@
+import hitboxes.Player;
+import hitboxes.killblocks.KillBlock;
+import hitboxes.safeblocks.SafeBlock;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import nav.Coord;
-import Hitboxes.Player;
-import Hitboxes.killblocks.KillBlock;
+import navigation.Coord;
 
 
 public class Map {
 	public static final int WIDTH = 1280, HEIGHT = 720;
 	public BufferedImage background;
 	public ArrayList<KillBlock> killblocks;
+	public ArrayList<SafeBlock> safeblocks;
 	private Coord spawn;
 	Map(BufferedImage background, Coord spawn){
 		this.background = background;
 		this.spawn = spawn;
 		killblocks = new ArrayList<KillBlock>();
+		safeblocks = new ArrayList<SafeBlock>();
 	}
 	Map(){}
 	public Coord getSpawn(){
@@ -24,27 +28,15 @@ public class Map {
 	public void add(KillBlock kb){
 		killblocks.add(kb);
 	}
-	/*
-	public void addKB(int dir, int coordinate) throws IllegalArgumentException{
-		switch(dir){
-		case 0:
-			killblocks.add(new KillBlock(-WIDTH,coordinate,2*WIDTH,2*HEIGHT));
-			break;
-		case 1:
-			killblocks.add(new KillBlock(-WIDTH,-HEIGHT,coordinate,2*HEIGHT));
-			break;
-		case 2:
-			killblocks.add(new KillBlock(-WIDTH,-HEIGHT,2*WIDTH,coordinate));
-			break;
-		case 3:
-			killblocks.add(new KillBlock(coordinate,-HEIGHT,2*WIDTH,2*HEIGHT));
-			break;
-		default:
-			throw new IllegalArgumentException("dir must be one of {0,1,2,3}");
-		}
-	}*/
+	public void add(SafeBlock sb){
+		safeblocks.add(sb);
+	}
+	/**
+	 * Clears all killblocks and safeblocks on the map
+	 */
 	public void removeAll(){
 		killblocks = new ArrayList<KillBlock>();
+		safeblocks = new ArrayList<SafeBlock>();
 	}
 	public void draw(Graphics g){
 		g.drawImage(background,0,0,WIDTH,HEIGHT,null);

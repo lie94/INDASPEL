@@ -1,4 +1,4 @@
-package Hitboxes;
+package hitboxes;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import nav.Coord;
+import navigation.Coord;
 
 
 public class Player extends Hitbox{
@@ -19,26 +19,14 @@ public class Player extends Hitbox{
 			init();
 		}
 	}
-	private void init(){
-		sprites = new BufferedImage[1];
-		try {
-			sprites[0] = ImageIO.read(this.getClass().getResource("/res/images/sprite.jpg"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		hasInit = true;
-	}
-	public void setX(int x){
-		c.setX(x);
-	}
-	public void setY(int y){
-		c.setY(y);
-	}
-	public void increaseX(){
-		c.add(SPEED,0);
+	public void setCoord(Coord c){
+		this.c = c;
 	}
 	public void increaseX(int i){
 		c.add(i,0);
+	}
+	public void increaseX(){
+		c.add(SPEED,0);
 	}
 	public void decreaseX(){
 		c.add(-SPEED,0);
@@ -51,6 +39,12 @@ public class Player extends Hitbox{
 	}
 	public void setC(Coord c){
 		this.c = c;
+	}
+	public void setX(int x){
+		c.setX(x);
+	}
+	public void setY(int y){
+		c.setY(y);
 	}
 	public void move(int i){
 		switch(i){
@@ -78,10 +72,32 @@ public class Player extends Hitbox{
 		g.setColor(Color.BLUE);
 		g.fillRect(c.getX() + width / 3, c.getY() + height / 3, width / 3, height / 3);
 	}
-	public void update(){
-		
-	}
 	public Player clone(){
 		return new Player(c,width,height);
+	}
+	/**
+	 * Returns an array containing the four corners of the player
+	 * 0: Upper left
+	 * 1: upper right
+	 * 2: lower right
+	 * 3: lower left
+	 * @return
+	 */
+	public Coord[] getCorners(){
+		Coord[] corners = new Coord[4];
+		corners[0] = new Coord(c);
+		corners[1] = new Coord(new Coord(c.getX() + width	, c.getY()			));
+		corners[2] = new Coord(new Coord(c.getX() + width	, c.getY() + height	));
+		corners[3] = new Coord(new Coord(c.getX()			, c.getY() + height	));
+		return corners;
+	}
+	private void init(){
+		sprites = new BufferedImage[1];
+		try {
+			sprites[0] = ImageIO.read(this.getClass().getResource("/res/images/sprite.jpg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		hasInit = true;
 	}
 }
