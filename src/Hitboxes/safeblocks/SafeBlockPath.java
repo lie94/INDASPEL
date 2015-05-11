@@ -10,10 +10,16 @@ public class SafeBlockPath extends SafeBlock {
 	Vector[] dirs;
 	int[] max;
 	int speed = 8, index, last_index, count;
-	
+	/**
+	 * Includes a 
+	 * @param path
+	 */
 	public SafeBlockPath(Coord ... path){
 		super(path[0]);
 		init(path);
+	}
+	protected SafeBlockPath(){
+		super(new Coord(0,0));
 	}
 	public SafeBlockPath(int width, int height, Coord ... path){
 		super(width,height,path[0]);
@@ -101,7 +107,6 @@ public class SafeBlockPath extends SafeBlock {
 	 */
 	private void init(Coord[] path){
 		this.path = path;
-		color = Color.GREEN;
 		count = 0;
 		index = 0;
 		last_index = 0;
