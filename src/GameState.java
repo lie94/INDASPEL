@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -5,9 +6,8 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
-import killblocks.KillBlockPath;
+import killblocks.KillBlock;
 import nav.Coord;
-import Hitboxes.KillBlock;
 import Hitboxes.Player;
 
 
@@ -45,7 +45,6 @@ public class GameState {
 		if(currentMap.isTouchingKB(player)){
 			resetToMap(Arrays.asList(maps).indexOf(currentMap));
 		}
-		// TODO UPDATE THE ENVIROMENT
 		for(KillBlock kb : currentMap.killblocks){
 			kb.update();
 		}
@@ -98,10 +97,11 @@ public class GameState {
 		maps[i].removeAll();
 		switch(i){
 		case 0:
-			maps[0].add(new KillBlockPath(new Coord(320,180), new Coord(960,540), new Coord(960,180),  new Coord(320,540)));
-			maps[0].add(new KillBlockPath(new Coord(320,0), new Coord(640,Map.HEIGHT - KillBlock.STD_HEIGHT)));
-			maps[0].add(new KillBlockPath(new Coord(960,0), new Coord(640,Map.HEIGHT - KillBlock.STD_HEIGHT)));
-			maps[0].add(new KillBlockPath(new Coord(0,360 + KillBlock.STD_HEIGHT / 2), new Coord(1280 - KillBlock.STD_WIDTH,360 + KillBlock.STD_HEIGHT)));
+			maps[0].add(new KillBlock(new Coord(500,500)));
+			maps[0].add(new KillBlock(new Coord(320,180), new Coord(960,540), new Coord(960,180),  new Coord(320,540)));
+			maps[0].add(new KillBlock(new Coord(320,0), new Coord(640,Map.HEIGHT - KillBlock.STD_HEIGHT)).setPercent(50).setColor(Color.BLUE));
+			maps[0].add(new KillBlock(new Coord(960,0), new Coord(640,Map.HEIGHT - KillBlock.STD_HEIGHT)));
+			maps[0].add(new KillBlock(new Coord(0,360 + KillBlock.STD_HEIGHT / 2), new Coord(1280 - KillBlock.STD_WIDTH,360 + KillBlock.STD_HEIGHT)).setPercent(90).setColor(Color.MAGENTA));
 			break;
 		}
 	}

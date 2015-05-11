@@ -48,8 +48,11 @@ public class Vector extends Coord{
 		return this;
 	}
 	public Vector multiply(int i){
-		x *= i;
-		y *= i;
+		return multiply((double) (i));
+	}
+	public Vector multiply(double d){
+		x *= d;
+		y *= d;
 		return this;
 	}
 	public Vector clone(){

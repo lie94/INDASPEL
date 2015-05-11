@@ -2,8 +2,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import killblocks.KillBlock;
 import nav.Coord;
-import Hitboxes.KillBlock;
 import Hitboxes.Player;
 
 

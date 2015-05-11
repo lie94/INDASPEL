@@ -21,9 +21,6 @@ public abstract class Block extends Hitbox{
 	public Block(Coord c, Vector dir, int cycle_size){
 		super(c,STD_WIDTH,STD_HEIGHT);
 	}
-	public void setColor(Color c){
-		color = c;
-	}
 	public Coord getCoord(){
 		return c.clone();
 	}
