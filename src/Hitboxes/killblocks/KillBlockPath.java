@@ -1,22 +1,20 @@
-package killblocks;
+package Hitboxes.killblocks;
 
 import java.awt.Color;
 
-import killblocks.KillBlock;
 import nav.Coord;
 import nav.Vector;
-import Hitboxes.Block;
 
-public class KillBlock extends Block{
+public class KillBlockPath extends KillBlock{
 	Coord[] path;
 	Vector[] dirs;
 	int[] max;
 	int speed = 8, index, last_index, count;
-	public KillBlock(Coord ... path){
+	public KillBlockPath(Coord ... path){
 		super(path[0]);
 		init(path);
 	}
-	protected KillBlock(){
+	protected KillBlockPath(){
 		super(new Coord(0,0));
 	}
 	private void init(Coord[] path){
@@ -45,7 +43,7 @@ public class KillBlock extends Block{
 			}
 		}
 	}
-	public KillBlock setSpeed(int speed){
+	public KillBlockPath setSpeed(int speed){
 		this.speed = speed;
 		refresh();
 		return this;
@@ -56,7 +54,7 @@ public class KillBlock extends Block{
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	public KillBlock setPercent(int percent) throws IllegalArgumentException{
+	public KillBlockPath setPercent(int percent) throws IllegalArgumentException{
 		if(percent < 0 || percent > 100){
 			throw new IllegalArgumentException("percent must have a value between 0-100. \n You gave the value: " + percent);
 		}else if(path.length == 1 || percent == 0){
@@ -96,7 +94,7 @@ public class KillBlock extends Block{
 			changeIndex();
 		}
 	}
-	public KillBlock setColor(Color c){
+	public KillBlockPath setColor(Color c){
 		color = c;
 		return this;
 	}

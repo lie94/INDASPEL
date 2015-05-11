@@ -1,5 +1,4 @@
 package Hitboxes;
-import java.awt.Graphics;
 
 import nav.Coord;
 
@@ -69,6 +68,4 @@ public abstract class Hitbox{
 	public int getY(){
 		return c.getY();
 	}
-	public abstract void draw(Graphics g);
-	public abstract void update();
 }

@@ -16,7 +16,6 @@ public class Run extends Canvas implements Runnable,KeyListener{
 	private boolean running;
 	private GameState gs;
 	
-	
 	public static void main(String[] args){
 		new Run().start();
 	}

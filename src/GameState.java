@@ -6,9 +6,11 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
-import killblocks.KillBlock;
 import nav.Coord;
 import Hitboxes.Player;
+import Hitboxes.killblocks.KillBlock;
+import Hitboxes.killblocks.KillBlockCycle;
+import Hitboxes.killblocks.KillBlockPath;
 
 
 public class GameState {
@@ -97,11 +99,12 @@ public class GameState {
 		maps[i].removeAll();
 		switch(i){
 		case 0:
-			maps[0].add(new KillBlock(new Coord(500,500)));
-			maps[0].add(new KillBlock(new Coord(320,180), new Coord(960,540), new Coord(960,180),  new Coord(320,540)));
-			maps[0].add(new KillBlock(new Coord(320,0), new Coord(640,Map.HEIGHT - KillBlock.STD_HEIGHT)).setPercent(50).setColor(Color.BLUE));
-			maps[0].add(new KillBlock(new Coord(960,0), new Coord(640,Map.HEIGHT - KillBlock.STD_HEIGHT)));
-			maps[0].add(new KillBlock(new Coord(0,360 + KillBlock.STD_HEIGHT / 2), new Coord(1280 - KillBlock.STD_WIDTH,360 + KillBlock.STD_HEIGHT)).setPercent(90).setColor(Color.MAGENTA));
+			maps[0].add(new KillBlockCycle(new Coord(250,250), new Coord(500,250), new Coord(500,500), new Coord(250,500)).setColor(Color.CYAN).setSpeed(4));
+			maps[0].add(new KillBlockPath(new Coord(500,500)));
+			maps[0].add(new KillBlockPath(new Coord(320,180), new Coord(960,540), new Coord(960,180),  new Coord(320,540)));
+			maps[0].add(new KillBlockPath(new Coord(320,0), new Coord(640,Map.HEIGHT - KillBlock.STD_HEIGHT)).setPercent(50).setColor(Color.BLUE));
+			maps[0].add(new KillBlockPath(new Coord(960,0), new Coord(640,Map.HEIGHT - KillBlock.STD_HEIGHT)));
+			maps[0].add(new KillBlockPath(new Coord(0,360 + KillBlock.STD_HEIGHT / 2), new Coord(1280 - KillBlock.STD_WIDTH,360 + KillBlock.STD_HEIGHT)).setPercent(90).setColor(Color.MAGENTA));
 			break;
 		}
 	}

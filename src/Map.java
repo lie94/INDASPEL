@@ -2,9 +2,9 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import killblocks.KillBlock;
 import nav.Coord;
 import Hitboxes.Player;
+import Hitboxes.killblocks.KillBlock;
 
 
 public class Map {

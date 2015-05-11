@@ -24,7 +24,6 @@ public abstract class Block extends Hitbox{
 	public Coord getCoord(){
 		return c.clone();
 	}
-	@Override
 	public void draw(Graphics g) {
 		if(g.getColor() != color){
 			g.setColor(color);
