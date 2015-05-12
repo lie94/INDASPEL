@@ -1,3 +1,4 @@
+package main;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -35,6 +36,7 @@ public class Run extends Canvas implements Runnable,KeyListener{
 		
 		frame = new JFrame(NAME);
 		
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 		
@@ -44,8 +46,8 @@ public class Run extends Canvas implements Runnable,KeyListener{
 		frame.pack();
 		
 		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
 		addKeyListener((KeyListener) this);
 	}
 	public synchronized void start(){
@@ -57,7 +59,6 @@ public class Run extends Canvas implements Runnable,KeyListener{
 	}
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		init();
 		while(running){
 			long t0 = System.currentTimeMillis();
@@ -74,6 +75,7 @@ public class Run extends Canvas implements Runnable,KeyListener{
 					t1 = System.currentTimeMillis();
 				}
 			}
+			System.out.println(1000 / (t1 - t0));
 		}
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	}

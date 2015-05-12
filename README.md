@@ -1,3 +1,3 @@
 # INDASPEL
-A game created for the class INDA14 at the royal institute of technology
-Written by Felix Hedenström and Linn Jensen
+A game created for the class INDA14 at the royal institute of technology.
+Written by Felix Hedenström and Linn Jensen during the month of may 2015.

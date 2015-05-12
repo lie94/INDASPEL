@@ -11,9 +11,9 @@ public abstract class Hitbox{
 		c = new Coord(x,y);
 		d = new Coord(height,width);
 	}
-	Hitbox(Coord upper_left_corner, Coord lower_right_corner){
+	Hitbox(Coord upper_left_corner, Coord size){
 		c = upper_left_corner;
-		d = lower_right_corner;
+		d = size;
 	}
 	Hitbox(Coord c, int width, int height){
 		this.c = c;
@@ -106,7 +106,7 @@ public abstract class Hitbox{
 	 * @return
 	 */
 	public Coord getMiddle(){
-		return c.add(d.getX() / 2, d.getY() / 2);
+		return new Coord((2*c.getX() + d.getX()) / 2, (2*c.getY() + d.getY()) / 2) ;
 	}
 	/**
 	 * Returns an array containing the four corners of the player

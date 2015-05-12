@@ -16,6 +16,9 @@ public class SafeBlockPath extends SafeBlock {
 	 */
 	public SafeBlockPath(Coord ... path){
 		super(path[0]);
+		/*if(path.length < 2){
+			throw new IllegalArgumentException("Paths have to have atleast two coordinates");
+		}*/
 		init(path);
 	}
 	protected SafeBlockPath(){
@@ -92,6 +95,9 @@ public class SafeBlockPath extends SafeBlock {
 		passable = b;
 		return this;
 	}
+	public Vector getVector(){
+		return dirs[index];
+	}
 	/**
 	 * Changes the color of the block
 	 * @param c
@@ -100,6 +106,9 @@ public class SafeBlockPath extends SafeBlock {
 	public SafeBlockPath setColor(Color c){
 		color = c;
 		return this;
+	}
+	public int points(){
+		return path.length;
 	}
 	/**
 	 * Initiates the block

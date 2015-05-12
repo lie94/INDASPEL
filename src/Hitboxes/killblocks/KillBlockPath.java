@@ -10,8 +10,11 @@ public class KillBlockPath extends KillBlock{
 	Vector[] dirs;
 	int[] max;
 	int speed = 8, index, last_index, count;
-	public KillBlockPath(Coord ... path){
+	public KillBlockPath(Coord ... path) throws IllegalArgumentException{
 		super(path[0]);
+		if(path.length < 2){
+			throw new IllegalArgumentException("Paths have to have atleast two coordinates");
+		}
 		init(path);
 	}
 	protected KillBlockPath(){

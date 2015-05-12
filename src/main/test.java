@@ -1,5 +1,7 @@
+package main;
 import hitboxes.Hitbox;
 import hitboxes.Player;
+import hitboxes.safeblocks.SafeBlock;
 import navigation.Coord;
 import navigation.Vector;
 import junit.framework.TestCase;
@@ -18,6 +20,11 @@ public class test extends TestCase{
 		assertTrue(Hitbox.shareHitbox(a, b));
 		assertFalse(a.shareHitbox(new Player(new Coord(121,121),120,120)));
 		
+		SafeBlock s1 = new SafeBlock(new Coord(0,5), new Coord(4,9));
+		SafeBlock s2 = new SafeBlock(new Coord(6,12), new Coord(6,6));
+		System.out.println(s2.getMiddle());
+		assertTrue(s1.getMiddle().intequals(new Coord(2,9)));
+		assertTrue(s2.getMiddle().intequals(new Coord(9,15)));
 	}
 	public void testMoveChar(){
 		Player a = new Player(new Coord(0,0),120,120);

@@ -58,4 +58,7 @@ public class Vector extends Coord{
 	public Vector clone(){
 		return new Vector(x,y);
 	}
+	public double scalar(Vector v){
+		return x * v.getX() + y * v.getY();
+	}
 }

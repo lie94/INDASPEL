@@ -61,4 +61,10 @@ public class Coord {
 		}
 		return false;
 	}
+	public boolean intequals(Coord c){
+		if((int) c.x == (int) x && (int) c.y == (int) y){
+			return true;
+		}
+		return false;
+	}
 }

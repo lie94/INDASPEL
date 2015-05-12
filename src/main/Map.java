@@ -1,7 +1,7 @@
+package main;
 import hitboxes.Exit;
 import hitboxes.killblocks.KillBlock;
 import hitboxes.safeblocks.SafeBlock;
-import hitboxes.safeblocks.SafeBlockPath;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -102,9 +102,9 @@ public class Map {
 		safeblocks = new ArrayList<SafeBlock>();
 		exits = new ArrayList<Exit>();
 		int wall_width = 20;
-		safeblocks.add(new SafeBlockPath(Map.WIDTH + wall_width	, wall_width				,	new Coord(-wall_width, Map.HEIGHT	)).setColor(Color.BLACK)); //0
-		safeblocks.add(new SafeBlockPath(wall_width 			, Map.HEIGHT + wall_width	,	new Coord(-wall_width, -wall_width	)).setColor(Color.BLACK)); //1
-		safeblocks.add(new SafeBlockPath(Map.WIDTH + wall_width	, wall_width				,	new Coord(-wall_width, -wall_width	)).setColor(Color.BLACK)); //2
-		safeblocks.add(new SafeBlockPath(wall_width				, Map.HEIGHT + 2*wall_width	,	new Coord(Map.WIDTH,-wall_width		)).setColor(Color.BLACK)); //3
+		safeblocks.add(new SafeBlock(Map.WIDTH + wall_width	, wall_width				,	new Coord(-wall_width, Map.HEIGHT	)).setColor(Color.BLACK)); //0
+		safeblocks.add(new SafeBlock(wall_width 			, Map.HEIGHT + wall_width	,	new Coord(-wall_width, -wall_width	)).setColor(Color.BLACK)); //1
+		safeblocks.add(new SafeBlock(Map.WIDTH + wall_width	, wall_width				,	new Coord(-wall_width, -wall_width	)).setColor(Color.BLACK)); //2
+		safeblocks.add(new SafeBlock(wall_width				, Map.HEIGHT + 2*wall_width	,	new Coord(Map.WIDTH,-wall_width		)).setColor(Color.BLACK)); //3
 	}
 }

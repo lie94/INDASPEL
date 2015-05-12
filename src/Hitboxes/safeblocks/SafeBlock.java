@@ -31,46 +31,50 @@ public class SafeBlock extends Block{
 	 * @param player
 	 */
 	public boolean playerColiding(Player player){
+		// TODO FIX GETTING TRAPPED BETWEEN OBJECTS does not work if you are pressed ex. up left into a corner or 
 		int width = Width(), height = Height();
-		/*if(contains(player.getMiddle()))
-			return true;*/
-		if(!passable && player.shareHitbox(this)){
+		if(!passable && shareHitbox(player)){
 			double length1, length2;
 			Coord[] corners = player.getCorners();
 			if(contains(corners[0])){
 				length1 = corners[0].sub(c.getX() + width	, corners[0].getY()	).length();
 				length2 = corners[0].sub(corners[0].getX()	, c.getY() + height	).length();
 				if(length1 > length2){
-					player.setY(c.getY() + height);
+					player.setY(c.getY() + height			);
 				}else{
-					player.setX(c.getX() + width);
+					player.setX(c.getX() + width			);
 				}
 			}else if(contains(corners[1])){
 				length1 = corners[1].sub(c.getX()			, corners[1].getY()	).length();
 				length2 = corners[1].sub(corners[1].getX()	, c.getY() + height	).length();
 				if(length1 > length2){
-					player.setY(c.getY() + height);
+					player.setY(c.getY() + height			);
 				}else{
-					player.setX(c.getX()  - player.Width());
+					player.setX(c.getX()  - player.Width()	);
 				}
 			}else if(contains(corners[2])){
 				length1 = corners[2].sub(c.getX()			, corners[2].getY()	).length();
 				length2 = corners[2].sub(corners[2].getX()	, c.getY()			).length();
 				if(length1 > length2){
-					player.setY(c.getY() - player.Height());
+					player.setY(c.getY() - player.Height()	);
 				}else{
-					player.setX(c.getX()  - player.Width());
+					player.setX(c.getX()  - player.Width()	);
 				}
 			}else if(contains(corners[3])){
-					length1 = corners[3].sub(c.getX() + width	, corners[3].getY()	).length();
-					length2 = corners[3].sub(corners[3].getX()	, c.getY()			).length();
-					if(length1 > length2){
-						player.setY(c.getY() - player.Height());
-					}else{
-						player.setX(c.getX()  + width);
-					}
+				length1 = corners[3].sub(c.getX() + width	, corners[3].getY()	).length();
+				length2 = corners[3].sub(corners[3].getX()	, c.getY()			).length();
+				if(length1 > length2){
+					player.setY(c.getY() - player.Height()	);
+				}else{
+					player.setX(c.getX()  + width			);
+				}
 			}
+			return true;
 		}
 		return false;
+	}
+	public SafeBlock setColor(Color c){
+		color = c;
+		return this;
 	}
 }
