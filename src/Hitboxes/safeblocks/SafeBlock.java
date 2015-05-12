@@ -6,7 +6,7 @@ import hitboxes.Block;
 import hitboxes.Player;
 import navigation.Coord;
 
-public abstract class SafeBlock extends Block{
+public class SafeBlock extends Block{
 	protected boolean passable;
 	public SafeBlock(Coord c) {
 		super(c);
@@ -17,16 +17,23 @@ public abstract class SafeBlock extends Block{
 		super(c,width,height);
 		passable = false;
 	}
+	public SafeBlock(Coord upper_left_corner, Coord lower_right_corner){
+		super(upper_left_corner, lower_right_corner);
+		passable = false;
+	}
 	public boolean getPassable(){
 		return passable;
 	}
-	public abstract void update();
+	public void update(){}
 	/** 
 	 * Checks if the player has collided with the block, and moves the player if so is
 	 * the case.
 	 * @param player
 	 */
-	public void playerColiding(Player player){
+	public boolean playerColiding(Player player){
+		int width = Width(), height = Height();
+		/*if(contains(player.getMiddle()))
+			return true;*/
 		if(!passable && player.shareHitbox(this)){
 			double length1, length2;
 			Coord[] corners = player.getCorners();
@@ -44,26 +51,26 @@ public abstract class SafeBlock extends Block{
 				if(length1 > length2){
 					player.setY(c.getY() + height);
 				}else{
-					player.setX(c.getX()  - player.getWidth());
+					player.setX(c.getX()  - player.Width());
 				}
 			}else if(contains(corners[2])){
 				length1 = corners[2].sub(c.getX()			, corners[2].getY()	).length();
 				length2 = corners[2].sub(corners[2].getX()	, c.getY()			).length();
 				if(length1 > length2){
-					player.setY(c.getY() - player.getHeight());
+					player.setY(c.getY() - player.Height());
 				}else{
-					player.setX(c.getX()  - player.getWidth());
+					player.setX(c.getX()  - player.Width());
 				}
 			}else if(contains(corners[3])){
 					length1 = corners[3].sub(c.getX() + width	, corners[3].getY()	).length();
 					length2 = corners[3].sub(corners[3].getX()	, c.getY()			).length();
 					if(length1 > length2){
-						player.setY(c.getY() - player.getHeight());
+						player.setY(c.getY() - player.Height());
 					}else{
 						player.setX(c.getX()  + width);
 					}
 			}
-			
 		}
+		return false;
 	}
 }

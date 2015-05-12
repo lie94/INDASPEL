@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 
 
 public class test extends TestCase{
-	public void testShareHitbox(){
+	public void testHitbox(){
 		Player a = new Player(new Coord(0,0),120,120);
 		Player b = new Player(new Coord(60,60),120,120);
 		assertTrue(a.contains(new Coord(0, 0)));
@@ -17,13 +17,14 @@ public class test extends TestCase{
 		assertTrue(a.shareHitbox(b));
 		assertTrue(Hitbox.shareHitbox(a, b));
 		assertFalse(a.shareHitbox(new Player(new Coord(121,121),120,120)));
+		
 	}
 	public void testMoveChar(){
 		Player a = new Player(new Coord(0,0),120,120);
 		a.setCoord(new Coord(100,0));
-		assertEquals(100,a.getX());
+		assertEquals(100,a.X());
 		a.increaseX(10);
-		assertEquals(110,a.getX());
+		assertEquals(110,a.X());
 	}
 	public void testVector(){
 		Vector v = new Vector(0,4);
