@@ -179,8 +179,8 @@ public class GameState {
 			// Safeblocks
 			int y = 720 / 3;
 			int dx = 1280 / 5;
-			
-			temp.add(new SafeBlockPath(		new Coord(dx - Block.WIDTH					, y	- Block.WIDTH / 2			)));
+			//TODO STILL NOT GETTING SQUISHED BY BLOCKS
+			temp.add(new SafeBlock(		new Coord(dx - Block.WIDTH					, y	- Block.WIDTH / 2			)));
 			temp.add(new SafeBlockPath(		new Coord(dx								, y - Block.WIDTH / 2			), 
 											new Coord(2 * dx - Block.WIDTH / 2			, y - Block.WIDTH / 2			)));
 			temp.add(new SafeBlockCycle(	new Coord(dx * 3 - (Block.WIDTH * 3) / 2	, y - Block.HEIGHT * (3 / 2)	),
