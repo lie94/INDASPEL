@@ -136,10 +136,6 @@ public class GameState {
 											new Coord(dx * 3 + Block.WIDTH / 2			, y - Block.HEIGHT * (3 / 2)	),
 											new Coord(dx * 3 + Block.WIDTH / 2			, y + Block.HEIGHT / 2			),
 											new Coord(dx * 3 - (Block.WIDTH * 3) / 2	, y + Block.HEIGHT / 2			)));
-			/*maps[0].add(new SafeBlockPath(new Coord(300,300), new Coord(1000,600)));
-			maps[0].add(new SafeBlockCycle(new Coord(200,200), new Coord(800,200), new Coord(800,600), new Coord(200,600)));
-			maps[0].add(new SafeBlockPath(new Coord(200,200),new Coord(1000,200)));
-			maps[0].add(new SafeBlockPath(new Coord(1000,200),new Coord(200,200)));*/
 			// Killblocks
 			y = 2 * y;
 			maps[0].add(new KillBlockPath(	new Coord(dx - Block.WIDTH					, y	- Block.WIDTH / 2			)));
