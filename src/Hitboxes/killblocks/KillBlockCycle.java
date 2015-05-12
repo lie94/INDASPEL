@@ -9,7 +9,6 @@ public class KillBlockCycle extends KillBlockPath {
 	public KillBlockCycle(Coord ... path){
 		this.path = path;
 		c = path[0];
-		color = Color.BLACK;
 		count = 0;
 		index = 0;
 		last_index = 0;
@@ -53,5 +52,9 @@ public class KillBlockCycle extends KillBlockPath {
 			dirs[dirs.length - 1] = v.clone().norm().multiply(speed);
 			max[max.length - 1] = (int) (v.length() / speed);
 		}
+	}
+	public KillBlockCycle setColor(Color c){
+		color = c;
+		return this;
 	}
 }

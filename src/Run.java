@@ -4,7 +4,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
+
 import javax.swing.JFrame;
 
 
@@ -16,9 +18,16 @@ public class Run extends Canvas implements Runnable,KeyListener{
 	private boolean running;
 	private GameState gs;
 	
+	/**
+	 * Starts the program
+	 * @param args
+	 */
 	public static void main(String[] args){
 		new Run().start();
 	}
+	/**
+	 * Initiates the frame and starts the key listener
+	 */
 	Run(){
 		setMinimumSize(new Dimension(MAXW,MAXH));
 		setMaximumSize(new Dimension(MAXW,MAXH));
@@ -52,7 +61,7 @@ public class Run extends Canvas implements Runnable,KeyListener{
 		init();
 		while(running){
 			long t0 = System.currentTimeMillis();
-			gs.update();
+			running = gs.update();
 			render();
 			long t1 = System.currentTimeMillis();
 			if(t1-t0 < 16){
@@ -66,17 +75,14 @@ public class Run extends Canvas implements Runnable,KeyListener{
 				}
 			}
 		}
-		
-		
+		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 		gs.send(e,true);
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
 		gs.send(e,false);
 	}
 	@Override
@@ -94,7 +100,6 @@ public class Run extends Canvas implements Runnable,KeyListener{
 		bs.show();
 	}
 	private void init(){
-		// TODO Auto-generated method stub
 		gs = new GameState();
 		
 	}

@@ -74,7 +74,6 @@ public class KillBlockPath extends KillBlock{
 	}
 	private void init(Coord[] path){
 		this.path = path;
-		color = Color.BLACK;
 		count = 0;
 		index = 0;
 		last_index = 0;
