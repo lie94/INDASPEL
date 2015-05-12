@@ -10,11 +10,17 @@ import navigation.Coord;
 
 
 public class Player extends Hitbox{
-	public static final int SPEED = 8;
+	public static final int SPEED = 8, WIDTH = 45, HEIGHT = 45;
 	private static BufferedImage[] sprites;
 	private static boolean hasInit = false;
 	public Player(Coord c, int width, int height){
 		super(c,width,height);
+		if(!hasInit){
+			init();
+		}
+	}
+	public Player(Coord c){
+		super(c,WIDTH,HEIGHT);
 		if(!hasInit){
 			init();
 		}

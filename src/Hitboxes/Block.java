@@ -10,10 +10,10 @@ public abstract class Block extends Hitbox{
 		super(c, width, height);
 		// TODO Auto-generated constructor stub
 	}
-	public static final int STD_WIDTH = 100, STD_HEIGHT = 100;
+	public static final int WIDTH = 100, HEIGHT = 100;
 	protected Color color;
 	public Block(Coord c){
-		super(c,STD_WIDTH,STD_HEIGHT);
+		super(c,WIDTH,HEIGHT);
 	}
 	public Coord getCoord(){
 		return c.clone();

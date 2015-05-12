@@ -1,5 +1,7 @@
 package hitboxes.safeblocks;
 
+import java.awt.Color;
+
 import hitboxes.Block;
 import hitboxes.Player;
 import navigation.Coord;
@@ -9,6 +11,7 @@ public abstract class SafeBlock extends Block{
 	public SafeBlock(Coord c) {
 		super(c);
 		passable = false;
+		color = Color.GREEN;
 	}
 	public SafeBlock(int width, int height, Coord c) {
 		super(c,width,height);
