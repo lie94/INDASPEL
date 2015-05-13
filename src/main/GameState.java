@@ -92,20 +92,11 @@ public class GameState {
 		}
 		for(SafeBlock sb : currentMap.safeblocks){
 			sb.update();
+			sb.playerColiding(player);
 		}
-		boolean move = false, done = false;
 		for(SafeBlock sb : currentMap.safeblocks){
-			if(sb.playerColiding(player) && (sb instanceof SafeBlockPath || sb instanceof SafeBlockCycle)){
-				move = true;
-				if(!done)
-					done = true;
-				else
-					killPlayer();
-			}else if(sb.shareHitbox(player)){
-				if(!done){
-					done = true;
-				}else if(move)
-					killPlayer();
+			if(sb.shareHitbox(player)){
+				killPlayer();
 			}
 		}
 		for(Exit e : currentMap.exits){
@@ -186,7 +177,7 @@ public class GameState {
 			temp.add(new SafeBlockCycle(	new Coord(dx * 3 - (Block.WIDTH * 3) / 2	, y - Block.HEIGHT * (3 / 2)	),
 											new Coord(dx * 3 + Block.WIDTH / 2			, y - Block.HEIGHT * (3 / 2)	),
 											new Coord(dx * 3 + Block.WIDTH / 2			, y + Block.HEIGHT / 2			),
-											new Coord(dx * 3 - (Block.WIDTH * 3) / 2	, y + Block.HEIGHT / 2			)));
+											new Coord(dx * 3 - (Block.WIDTH * 3) / 2	, y + Block.HEIGHT / 2			)).setSpeed(2 * Block.SPEED));
 			// Killblocks
 			y = 2 * y;
 			temp.add(new KillBlock(	new Coord(dx - Block.WIDTH						, y	- Block.WIDTH / 2			)));
@@ -201,7 +192,7 @@ public class GameState {
 			temp.add(new Exit(new Coord(Map.WIDTH - Block.WIDTH, Map.HEIGHT / 2 - Block.HEIGHT / 2), 2));
 			break;
 		case 2:
-			int size1 = 10000; //Dubbla denna siffran blir block-antalet
+			int size1 = 5000; //Dubbla denna siffran blir block-antalet
 								// 20 000 : 60 fps
 								// 25 000 : 50 fps
 								// 50 000 : 24 fps

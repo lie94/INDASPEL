@@ -7,9 +7,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
+import java.io.File;
 
+import javax.print.attribute.standard.Media;
 import javax.swing.JFrame;
-
 
 public class Run extends Canvas implements Runnable,KeyListener{
 	private static final long serialVersionUID = 1L;
@@ -75,7 +76,7 @@ public class Run extends Canvas implements Runnable,KeyListener{
 					t1 = System.currentTimeMillis();
 				}
 			}
-			System.out.println(1000 / (t1 - t0));
+			//System.out.println(1000 / (t1 - t0));
 		}
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	}
@@ -103,6 +104,23 @@ public class Run extends Canvas implements Runnable,KeyListener{
 	}
 	private void init(){
 		gs = new GameState();
-		
+		//playSound("Allure.mp3");
 	}
+	/*public static synchronized void playSound(final String url) {
+		new Thread(new Runnable() {
+		// The wrapper thread is unnecessary, unless it blocks on the
+		// Clip finishing; see comments.
+			public void run() {
+				try {
+			        File f = new File("E:\\malayalam good song\\01_ISHTAMANU.MP3");
+			        Media hit = new Media(f.toURI().toString());
+			        MediaPlayer mediaPlayer = new MediaPlayer(hit);
+			        mediaPlayer.play();
+			    } catch(Exception ex) {
+			        ex.printStackTrace();
+			        System.out.println("Exception"+E.getMessage());
+			    }
+			}
+		}).start();
+	}*/
 }
