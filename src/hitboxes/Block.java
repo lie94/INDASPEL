@@ -6,7 +6,7 @@ import navigation.Coord;
 
 
 public abstract class Block extends Hitbox{
-	public static final int WIDTH = 100, HEIGHT = 100, SPEED = 8;
+	public static final int WIDTH = 100, HEIGHT = 100, SPEED = 4;
 	protected Color color;
 	/**
 	 * Creates a block of default size
@@ -43,11 +43,12 @@ public abstract class Block extends Hitbox{
 	 * @param g
 	 */
 	protected void draw_border(Graphics g){
-		int thickness = 2;
+		int thickness = 5;
 		g.setColor(Color.BLACK);
-		g.fillRect(c.getX()				, c.getY()				, Width()	, thickness	);		//0
-		g.fillRect(c.getX() + Width()	, c.getY()				, -thickness, Height()	);		//1
-		g.fillRect(c.getX()				, c.getY() + Height()	, Width()	, -thickness);		//2
-		g.fillRect(c.getX()				, c.getY()				, thickness	, Height()	);		//3
+		//System.out.println(Width());
+		g.fillRect(c.getX()							, c.getY()							, Width()	, thickness	);		//0
+		g.fillRect(c.getX() + Width() - thickness	, c.getY()							, thickness, Height()	);		//1 FEL
+		g.fillRect(c.getX()							, c.getY() + Height() - thickness	, Width()	, thickness);		//2	FEL
+		g.fillRect(c.getX()							, c.getY()							, thickness	, Height()	);		//3
 	}
 }

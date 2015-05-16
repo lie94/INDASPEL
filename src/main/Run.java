@@ -7,9 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
-import java.io.File;
 
-import javax.print.attribute.standard.Media;
 import javax.swing.JFrame;
 
 public class Run extends Canvas implements Runnable,KeyListener{
@@ -19,7 +17,7 @@ public class Run extends Canvas implements Runnable,KeyListener{
 	private JFrame frame;
 	private boolean running;
 	private GameState gs;
-	
+	public int fps = 0;
 	/**
 	 * Starts the program
 	 * @param args
@@ -53,6 +51,8 @@ public class Run extends Canvas implements Runnable,KeyListener{
 	}
 	public synchronized void start(){
 		running = true;
+		gs = new GameState(this);
+		new Thread(new Sound("src/res/sound/BPDG.wav")).start();
 		new Thread(this).start();
 	}
 	public synchronized void stop(){
@@ -60,23 +60,20 @@ public class Run extends Canvas implements Runnable,KeyListener{
 	}
 	@Override
 	public void run() {
-		init();
 		while(running){
 			long t0 = System.currentTimeMillis();
-			running = gs.update();
 			render();
+			running = gs.update();
 			long t1 = System.currentTimeMillis();
-			if(t1-t0 < 16){
-				while(t1-t0 < 16){
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+			if(t1-t0 < 1000 / 60){
+				while(t1-t0 < 1000.0 / 60){
 					t1 = System.currentTimeMillis();
 				}
+				fps = 60;
+			}else{
+				fps = (int) (1000 / (t1 - t0));
 			}
-			//System.out.println(1000 / (t1 - t0));
+			
 		}
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	}
@@ -102,25 +99,4 @@ public class Run extends Canvas implements Runnable,KeyListener{
 		g.dispose();
 		bs.show();
 	}
-	private void init(){
-		gs = new GameState();
-		//playSound("Allure.mp3");
-	}
-	/*public static synchronized void playSound(final String url) {
-		new Thread(new Runnable() {
-		// The wrapper thread is unnecessary, unless it blocks on the
-		// Clip finishing; see comments.
-			public void run() {
-				try {
-			        File f = new File("E:\\malayalam good song\\01_ISHTAMANU.MP3");
-			        Media hit = new Media(f.toURI().toString());
-			        MediaPlayer mediaPlayer = new MediaPlayer(hit);
-			        mediaPlayer.play();
-			    } catch(Exception ex) {
-			        ex.printStackTrace();
-			        System.out.println("Exception"+E.getMessage());
-			    }
-			}
-		}).start();
-	}*/
 }

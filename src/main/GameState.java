@@ -25,18 +25,23 @@ public class GameState {
 	private Map currentMap;
 	private Player player;
 	private Map[] maps;
+	private DrawText text;
 	private boolean[] directions; 	/* Upp 		index 0
 									 * H�ger 	index 1
 									 * Ner 		index 2
 									 * V�nster 	index 3
 									 */
+	private Run r;
 	/**
 	 * Initiates the backgrounds and spawns of the maps, but not the blocks in the maps
 	 */
-	GameState(){
+	GameState(Run r){
 		player = new Player(new Coord(0,0),45,45);
 		directions = new boolean[4];
 		maps = new Map[3];
+		//FPS counter at top right corner
+		text = new DrawText(new Coord(0,10));
+		this.r = r;
 		try {
 			//MENUTEST
 			maps[0] = new Map(Color.WHITE														,Map.getMiddle()	);
@@ -53,8 +58,6 @@ public class GameState {
 		// Starting map
 		currentMap = maps[0];
 		killPlayer();
-		
-		
 	}
 	/**
 	 * Draws everything on that is happening on the current map
@@ -67,12 +70,13 @@ public class GameState {
 		}
 		player.draw(g);
 		for(KillBlock kb : currentMap.killblocks){
+			
 			kb.draw(g);
 		}
 		for(SafeBlock sb : currentMap.safeblocks){
 			sb.draw(g);
 		}
-		
+		text.draw(g,"" + r.fps);
 		
 	}
 	/**
