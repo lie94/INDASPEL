@@ -13,6 +13,11 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Sound implements Runnable{
 	String url;
+	/**
+	 * Creates a Sound object
+	 * @param url
+	 * The relative path of the sound that should be played
+	 */
 	Sound(String url){
 		this.url = url;
 	}

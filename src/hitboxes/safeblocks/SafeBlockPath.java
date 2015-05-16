@@ -11,8 +11,10 @@ public class SafeBlockPath extends SafeBlock {
 	int[] max;
 	int speed = 8, index, last_index, count;
 	/**
-	 * Includes a 
+	 * Creates a safeblock that will move along the path
 	 * @param path
+	 * Describes every coordinate in the desired
+	 * paths
 	 */
 	public SafeBlockPath(Coord ... path){
 		super(path[0]);
@@ -21,12 +23,20 @@ public class SafeBlockPath extends SafeBlock {
 		}
 		init(path);
 	}
+	/**
+	 * Creates an empty path
+	 */
 	protected SafeBlockPath(){
 		super(new Coord(0,0));
 	}
-	public SafeBlockPath(int width, int height, Coord ... path){
-		super(width,height,path[0]);
-		init(path);
+	/**
+	 * Changes the siez of the block
+	 * @param size
+	 * @return
+	 */
+	public SafeBlockPath setSize(Coord size){
+		d = size;
+		return this;
 	}
 	/**
 	 * Sets the speed the block should be moving at.

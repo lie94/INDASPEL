@@ -12,6 +12,7 @@ import hitboxes.safeblocks.SafeBlockPath;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
@@ -21,7 +22,7 @@ import javax.imageio.ImageIO;
 import navigation.Coord;
 
 
-public class GameState {
+public class GameState implements KeyListener {
 	private Map currentMap;
 	private Player player;
 	private Map[] maps;
@@ -36,7 +37,7 @@ public class GameState {
 	 * Initiates the backgrounds and spawns of the maps, but not the blocks in the maps
 	 */
 	GameState(Run r){
-		player = new Player(new Coord(0,0),45,45);
+		player = new Player(new Coord(0,0),new Coord(45,45));
 		directions = new boolean[4];
 		maps = new Map[3];
 		//FPS counter at top right corner
@@ -70,7 +71,6 @@ public class GameState {
 		}
 		player.draw(g);
 		for(KillBlock kb : currentMap.killblocks){
-			
 			kb.draw(g);
 		}
 		for(SafeBlock sb : currentMap.safeblocks){
@@ -83,11 +83,13 @@ public class GameState {
 	 * Updates everything that is happening on the current map
 	 */
 	public boolean update(){
-		for(int i = 0; i < 4; i++){
+		/*for(int i = 0; i < 4; i++){
 			if(directions[i]){
 				player.move(i);
 			}
-		}
+		}*/
+		
+		player.move(directions);
 		for(KillBlock kb : currentMap.killblocks){
 			kb.update();
 			if(kb.shareHitbox(player)){
@@ -117,46 +119,6 @@ public class GameState {
 		return true;
 	}
 	/**
-	 * Recives a keyevent and translates it to how the player should be moved
-	 * @param e
-	 * @param keyPress
-	 */
-	public void send(KeyEvent e, boolean keyPress){
-		if(keyPress){
-			switch(e.getKeyCode()){
-			case 38:
-				directions[0] = true;
-				break;
-			case 39:
-				directions[1] = true;
-				break;
-			case 40:
-				directions[2] = true;
-				break;
-			case 37:
-				directions[3] = true;
-				break;
-			default:
-			}	
-		}else{
-			switch(e.getKeyCode()){
-			case 38:
-				directions[0] = false;
-				break;
-			case 39:
-				directions[1] = false;
-				break;
-			case 40:
-				directions[2] = false;
-				break;
-			case 37:
-				directions[3] = false;
-				break;
-			default:
-			}	
-		}
-	}
-	/**
 	 * Resets/Initiates the map with index i
 	 * @param i
 	 * @return 
@@ -165,7 +127,7 @@ public class GameState {
 		Map temp = maps[i].removeAll();
 		switch(i){
 		case 0:
-			Coord size = new Coord(new Coord(2 * Map.WIDTH / 10, 360));
+			Coord size = new Coord(2 * Map.WIDTH / 10, 360);
 			temp.add(new Exit(new Coord(7 * Map.WIDTH / 10,180), size, 1).setText("Start Game"));
 			temp.add(new Exit(new Coord(1 * Map.WIDTH/10,180), size, -1).setText("Exit Game"));
 			break;
@@ -174,7 +136,6 @@ public class GameState {
 			// Safeblocks
 			int y = 720 / 3;
 			int dx = 1280 / 5;
-			//TODO STILL NOT GETTING SQUISHED BY BLOCKS
 			temp.add(new SafeBlock(		new Coord(dx - Block.WIDTH					, y	- Block.WIDTH / 2			)));
 			temp.add(new SafeBlockPath(		new Coord(dx								, y - Block.WIDTH / 2			), 
 											new Coord(2 * dx - Block.WIDTH / 2			, y - Block.WIDTH / 2			)));
@@ -191,7 +152,7 @@ public class GameState {
 											new Coord(dx * 3 + Block.WIDTH / 2			, y - Block.HEIGHT * (3 / 2)	),
 											new Coord(dx * 3 + Block.WIDTH / 2			, y + Block.HEIGHT / 2			),
 											new Coord(dx * 3 - (Block.WIDTH * 3) / 2	, y + Block.HEIGHT / 2			)));
-			temp.add(new SafeBlock(new Coord(Map.getMiddle())));
+			temp.add(new SafeBlock(Map.getMiddle()));
 			//Exits
 			temp.add(new Exit(new Coord(Map.WIDTH - Block.WIDTH, Map.HEIGHT / 2 - Block.HEIGHT / 2), 2));
 			break;
@@ -229,4 +190,42 @@ public class GameState {
 		player.setC(currentMap.getSpawn());
 		resetToMap(Arrays.asList(maps).indexOf(currentMap));
 	}
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		switch(arg0.getKeyCode()){
+		case 38:
+			directions[0] = true;
+			break;
+		case 39:
+			directions[1] = true;
+			break;
+		case 40:
+			directions[2] = true;
+			break;
+		case 37:
+			directions[3] = true;
+			break;
+		default:
+		}
+	}
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		switch(arg0.getKeyCode()){
+		case 38:
+			directions[0] = false;
+			break;
+		case 39:
+			directions[1] = false;
+			break;
+		case 40:
+			directions[2] = false;
+			break;
+		case 37:
+			directions[3] = false;
+			break;
+		default:
+		}
+	}
+	@Override
+	public void keyTyped(KeyEvent arg0) {}
 }

@@ -3,13 +3,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import navigation.Coord;
+import navigation.Vector;
 
 
 public class Player extends Hitbox{
-	public static final int SPEED = 8, WIDTH = 45, HEIGHT = 45;
-	public Player(Coord c, int width, int height){
-		super(c,width,height);
-	}
+	public static final int SPEED = 4, WIDTH = 45, HEIGHT = 45;
 	public Player(Coord upper_left_corner, Coord size){
 		super(upper_left_corner, size);
 	}
@@ -19,7 +17,7 @@ public class Player extends Hitbox{
 	 * The coordinates of where the player is.
 	 */
 	public Player(Coord c){
-		super(c,WIDTH,HEIGHT);
+		super(c,new Coord(WIDTH,HEIGHT));
 	}
 	/**
 	 * Moves the player to the coordinate c
@@ -28,9 +26,6 @@ public class Player extends Hitbox{
 	 */
 	public void setCoord(Coord c){
 		this.c = c;
-	}
-	public void increaseX(int i){
-		c.add(i,0);
 	}
 	public void increaseX(){
 		c.add(SPEED,0);
@@ -79,16 +74,20 @@ public class Player extends Hitbox{
 		}
 	}
 	/**
+	 * Moves the player according to the array
+	 * dirs. Check documentation for dirrArrayToVector
+	 * @param dirs
+	 */
+	public void move(boolean[] dirs){
+		Vector dv = Vector.dirArrayToVector(dirs);
+		c.add(dv);
+	}
+	/**
 	 * Draws the player
 	 */
 	public void draw(Graphics g){
-		int width = Width(), height = Height();
-		g.setColor(Color.BLUE);
-		g.fillRect(c.getX(), c.getY(), width, height);
-		g.setColor(Color.RED);
-		g.fillRect(c.getX() + width / 6, c.getY() + height / 6, (width * 2) / 3, (height * 2) / 3);
-		g.setColor(Color.BLUE);
-		g.fillRect(c.getX() + width / 3, c.getY() + height / 3, width / 3, height / 3);
+		g.setColor(Color.YELLOW);
+		g.fillRect(X(), Y(), Width(), Height());
 	}
 	/**
 	 * Returns a copy of the player

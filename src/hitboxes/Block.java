@@ -13,13 +13,17 @@ public abstract class Block extends Hitbox{
 	 * @param c
 	 */
 	public Block(Coord upper_left_corner){
-		super(upper_left_corner,WIDTH,HEIGHT);
+		super(upper_left_corner,new Coord(WIDTH,HEIGHT));
 	}
+	/**
+	 * Creates a block with the a given size
+	 * @param upper_right_corner
+	 * Describes where the upper left corner of the block is
+	 * @param size
+	 * Describes the blocks size
+	 */
 	public Block(Coord upper_right_corner, Coord size){
 		super(upper_right_corner, size);
-	}
-	protected Block(Coord c, int width, int height) {
-		super(c, width, height);
 	}
 	/**
 	 * Returns the coordinates of the upper
@@ -35,7 +39,7 @@ public abstract class Block extends Hitbox{
 		if(g.getColor() != color){
 			g.setColor(color);
 		}
-		g.fillRect(c.getX(), c.getY(), Width(), Height());
+		g.fillRect(c.X(), c.Y(), Width(), Height());
 		draw_border(g);
 	}
 	/**
@@ -45,10 +49,13 @@ public abstract class Block extends Hitbox{
 	protected void draw_border(Graphics g){
 		int thickness = 5;
 		g.setColor(Color.BLACK);
-		//System.out.println(Width());
-		g.fillRect(c.getX()							, c.getY()							, Width()	, thickness	);		//0
-		g.fillRect(c.getX() + Width() - thickness	, c.getY()							, thickness, Height()	);		//1 FEL
-		g.fillRect(c.getX()							, c.getY() + Height() - thickness	, Width()	, thickness);		//2	FEL
-		g.fillRect(c.getX()							, c.getY()							, thickness	, Height()	);		//3
+		g.fillRect(c.X()						, c.Y()							, Width()	, thickness	);		//0
+		g.fillRect(c.X() + Width() - thickness	, c.Y()							, thickness, Height()	);		//1 FEL
+		g.fillRect(c.X()						, c.Y() + Height() - thickness	, Width()	, thickness);		//2	FEL
+		g.fillRect(c.X()						, c.Y()							, thickness	, Height()	);		//3
 	}
+	/**
+	 * Default update operation
+	 */
+	public void update() {};
 }

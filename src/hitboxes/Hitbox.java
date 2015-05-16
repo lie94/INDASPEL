@@ -6,18 +6,31 @@ import navigation.Coord;
 
 
 public abstract class Hitbox{
-	protected Coord c, d; //Upper right corner / Lower left corner
+	protected Coord c, d; //Upper right corner / Size of the object (width,height)
+	/**
+	 * Creates a new hitbox
+	 * @param x,y
+	 * Describes the coordinates of the upper left corner of the hitbox
+	 * @param width,height
+	 * Describes the size of the hitbox
+	 */
 	Hitbox(int x, int y,  int width, int height){
 		c = new Coord(x,y);
 		d = new Coord(height,width);
 	}
+	/**
+	 * Creates a new hitbox with its upper left corner at the
+	 * coordinates of "upper_left_corner" and a size of
+	 * "size".
+	 * @param upper_left_corner
+	 * Describes where the upper left corner of the
+	 * hitbox is
+	 * @param size
+	 * Describes the size of the hitbox
+	 */
 	Hitbox(Coord upper_left_corner, Coord size){
 		c = upper_left_corner;
 		d = size;
-	}
-	Hitbox(Coord c, int width, int height){
-		this.c = c;
-		d = new Coord(width,height);
 	}
 	/**
 	 * Checks if all coord are contained in the hitbox that calls this method
@@ -46,9 +59,7 @@ public abstract class Hitbox{
 	 * false otherwise
 	 */
 	public static boolean contains(Coord c, Hitbox h){
-		int x = c.getX();
-		int y = c.getY();
-		if(h.X() <= x && h.Y() <= y && h.Y() + h.Height() >= y && h.X() + h.Width() >= x)
+		if(h.X() <= c.X() && h.Y() <= c.Y() && h.Y() + h.Height() >= c.Y() && h.X() + h.Width() >= c.X())
 			return true;
 		return false;
 	}
@@ -112,35 +123,35 @@ public abstract class Hitbox{
 	 * @return
 	 */
 	public int Width(){
-		return d.getX();
+		return d.X();
 	}
 	/**
 	 * Returns the height of this method
 	 * @return
 	 */
 	public int Height(){
-		return d.getY();
+		return d.Y();
 	}
 	/**
 	 * Returns the x coordinate of the hitbox
 	 * @return
 	 */
 	public int X(){
-		return c.getX();
+		return c.X();
 	}
 	/**
 	 * Returns the y coordinate of the hitbox
 	 * @return
 	 */
 	public int Y(){
-		return c.getY();
+		return c.Y();
 	}
 	/**
 	 * Finds the middle point of the hitbox
 	 * @return
 	 */
 	public Coord getMiddle(){
-		return new Coord((2*c.getX() + d.getX()) / 2, (2*c.getY() + d.getY()) / 2) ;
+		return new Coord((2*c.X() + d.X()) / 2, (2*c.Y() + d.Y()) / 2) ;
 	}
 	/**
 	 * Returns an array containing the four corners of the player
@@ -152,10 +163,10 @@ public abstract class Hitbox{
 	 */
 	public Coord[] getCorners(){
 		Coord[] corners = new Coord[4];
-		corners[0] = new Coord(c);
-		corners[1] = new Coord(new Coord(c.getX() + Width()	, c.getY()					));
-		corners[2] = new Coord(new Coord(c.getX() + Width()	, c.getY() + Height()		));
-		corners[3] = new Coord(new Coord(c.getX()				, c.getY() + Height()	));
+		corners[0] = c;
+		corners[1] = new Coord(c.X() + Width()	, c.Y()				);
+		corners[2] = new Coord(c.X() + Width()	, c.Y() + Height()	);
+		corners[3] = new Coord(c.X()			, c.Y() + Height()	);
 		return corners;
 	}
 	/**

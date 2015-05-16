@@ -4,6 +4,13 @@ import navigation.Coord;
 import navigation.Vector;
 
 public class SafeBlockCycle extends SafeBlockPath{
+	/**
+	 * Creates a safeblockcycle that moves
+	 * in a cycle through all the given points
+	 * @param path
+	 * Contains the coords of the points that should be
+	 * visited in the cycle
+	 */
 	public SafeBlockCycle(Coord ... path){
 		this.path = path;
 		c = path[0];
@@ -12,11 +19,17 @@ public class SafeBlockCycle extends SafeBlockPath{
 		last_index = 0;
 		refresh();
 	}
+	/**
+	 * Changes the speed of the block
+	 */
 	public SafeBlockCycle setSpeed(int speed){
 		this.speed = speed;
 		refresh();
 		return this;
 	}
+	/**
+	 * Updates the blocks position
+	 */
 	@Override
 	public void update() {
 		if(path.length == 1){
@@ -33,6 +46,10 @@ public class SafeBlockCycle extends SafeBlockPath{
 			}
 		}
 	}
+	/**
+	 * Refreshes all arrays so that they are correct. 
+	 * Needed if speed is updated.
+	 */
 	private void refresh(){
 		if(path.length == 1){
 			return;

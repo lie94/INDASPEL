@@ -10,6 +10,14 @@ public class KillBlockPath extends KillBlock{
 	Vector[] dirs;
 	int[] max;
 	int speed = 8, index, last_index, count;
+	/**
+	 * Creates a killblockpath that will start
+	 * at the first coord in path
+	 * @param path
+	 * Describes the path the killblockpath will take
+	 * @throws IllegalArgumentException
+	 * Cannot have less than 2 coordinates in path
+	 */
 	public KillBlockPath(Coord ... path) throws IllegalArgumentException{
 		super(path[0]);
 		if(path.length < 2){
@@ -17,9 +25,28 @@ public class KillBlockPath extends KillBlock{
 		}
 		init(path);
 	}
+	/**
+	 * Changes the size of the block
+	 * @param size
+	 * @return
+	 */
+	public KillBlockPath setSize(Coord size){
+		d = size;
+		return this;
+	}
+	/**
+	 * Creates an empty path.
+	 */
 	protected KillBlockPath(){
 		super(new Coord(0,0));
 	}
+	/**
+	 * Changes the speed of the block
+	 * @param speed
+	 * The desired speed
+	 * @return
+	 * The block itself
+	 */
 	public KillBlockPath setSpeed(int speed){
 		this.speed = speed;
 		refresh();
@@ -58,6 +85,9 @@ public class KillBlockPath extends KillBlock{
 		count = (int) (max[index - 1] * p);
 		return this;
 	}
+	/**
+	 * Moves the block
+	 */
 	@Override
 	public void update() {
 		if(path.length == 1){
@@ -71,10 +101,21 @@ public class KillBlockPath extends KillBlock{
 			changeIndex();
 		}
 	}
+	/**
+	 * Changes the color of the block
+	 * @param c
+	 * The desired color
+	 * @return
+	 * The block itself after the colorchange
+	 */
 	public KillBlockPath setColor(Color c){
 		color = c;
 		return this;
 	}
+	/**
+	 * Initiates a new path
+	 * @param path
+	 */
 	private void init(Coord[] path){
 		this.path = path;
 		count = 0;
@@ -100,6 +141,10 @@ public class KillBlockPath extends KillBlock{
 			}
 		}
 	}
+	/**
+	 * Only used in the update method. 
+	 * Changes the vectors in dirs so that the path will go back after it hits the end
+	 */
 	private void changeIndex(){
 		if(max.length == 1){
 			flip();
@@ -127,13 +172,16 @@ public class KillBlockPath extends KillBlock{
 			index++;
 		}
 	}
+	/**
+	 * Changes the direction of all vectors in dir
+	 */
 	private void flip(){
 		for(Vector v : dirs){
 			v.antiDir();
 		}
 	}
 	/**
-	 * Returns the total length of the whole path
+	 * Returns the total length of the whole path in pixels
 	 * @return
 	 */
 	private double pathLength(){

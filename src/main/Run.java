@@ -3,14 +3,13 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
-public class Run extends Canvas implements Runnable,KeyListener{
+public class Run extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1L;
 	private final String NAME = "BOC";
 	private final int MAXW = 1280, MAXH = 720;
@@ -47,46 +46,54 @@ public class Run extends Canvas implements Runnable,KeyListener{
 		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
-		addKeyListener((KeyListener) this);
 	}
+	/**
+	 * Initiates all of the program
+	 */
 	public synchronized void start(){
 		running = true;
 		gs = new GameState(this);
+		addKeyListener((KeyListener) gs);
 		new Thread(new Sound("src/res/sound/BPDG.wav")).start();
 		new Thread(this).start();
 	}
+	/**
+	 * Kills the program
+	 */
 	public synchronized void stop(){
 		running = false;
 	}
+	/**
+	 * Starts as the thread is initiated
+	 * The main game loop that updates the gamestate
+	 * and draws the current map
+	 */
 	@Override
 	public void run() {
+		int frames = 0;
+		long time = System.currentTimeMillis();
 		while(running){
 			long t0 = System.currentTimeMillis();
 			render();
+			frames++;
 			running = gs.update();
 			long t1 = System.currentTimeMillis();
 			if(t1-t0 < 1000 / 60){
 				while(t1-t0 < 1000.0 / 60){
 					t1 = System.currentTimeMillis();
 				}
-				fps = 60;
-			}else{
-				fps = (int) (1000 / (t1 - t0));
 			}
-			
+			if(System.currentTimeMillis() - time > 100){
+				fps = (int) (frames / 0.1);
+				frames = 0;
+				time = System.currentTimeMillis();
+			}
 		}
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	}
-	@Override
-	public void keyPressed(KeyEvent e) {
-		gs.send(e,true);
-	}
-	@Override
-	public void keyReleased(KeyEvent e) {
-		gs.send(e,false);
-	}
-	@Override
-	public void keyTyped(KeyEvent e) {}
+	/**
+	 * Renders the current map and all the blocks in it
+	 */
 	private void render() {
 		BufferStrategy bs = getBufferStrategy();
 		if(bs == null){

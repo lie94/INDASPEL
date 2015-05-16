@@ -69,7 +69,7 @@ public class Exit extends Block{
 		if(g.getColor() != color){
 			g.setColor(color);
 		}
-		g.fillRect(c.getX(), c.getY(), Width(), Height());
+		g.fillRect(X(), Y(), Width(), Height());
 		draw_border(g);
 		if(text != null){
 			//TODO Display text in the middle of the exit

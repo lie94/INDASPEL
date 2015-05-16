@@ -102,9 +102,11 @@ public class Map {
 		safeblocks = new ArrayList<SafeBlock>();
 		exits = new ArrayList<Exit>();
 		int wall_width = 20;
-		safeblocks.add(new SafeBlock(Map.WIDTH + wall_width	, wall_width				,	new Coord(-wall_width, Map.HEIGHT	)).setColor(Color.BLACK)); //0
-		safeblocks.add(new SafeBlock(wall_width 			, Map.HEIGHT + wall_width	,	new Coord(-wall_width, -wall_width	)).setColor(Color.BLACK)); //1
-		safeblocks.add(new SafeBlock(Map.WIDTH + wall_width	, wall_width				,	new Coord(-wall_width, -wall_width	)).setColor(Color.BLACK)); //2
-		safeblocks.add(new SafeBlock(wall_width				, Map.HEIGHT + 2*wall_width	,	new Coord(Map.WIDTH,-wall_width		)).setColor(Color.BLACK)); //3
+		Coord horizontal_size = new Coord(Map.WIDTH + 2 * wall_width, wall_width);
+		Coord vertical_size = new Coord(wall_width,Map.HEIGHT + 2 * wall_width);
+		safeblocks.add(new SafeBlock(new Coord(-wall_width	, -wall_width	),	horizontal_size	).setColor(Color.BLACK)); //0
+		safeblocks.add(new SafeBlock(new Coord(Map.WIDTH	, -wall_width	),	vertical_size	).setColor(Color.BLACK)); //1
+		safeblocks.add(new SafeBlock(new Coord(-wall_width	, Map.HEIGHT	),	horizontal_size	).setColor(Color.BLACK)); //2
+		safeblocks.add(new SafeBlock(new Coord(-wall_width	, -wall_width	),	vertical_size	).setColor(Color.BLACK)); //3
 	}
 }
