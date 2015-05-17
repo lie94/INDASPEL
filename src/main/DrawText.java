@@ -2,6 +2,7 @@ package main;
 import hitboxes.Block;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import navigation.Coord;
@@ -11,6 +12,7 @@ public class DrawText {
 	private String text;
 	private Coord upper_left_corner;
 	private Color color;
+	private Font font;
 	/**
 	 * Creates a new text description
 	 * @param upper_left_corner
@@ -22,6 +24,7 @@ public class DrawText {
 		this.text = text;
 		this.upper_left_corner = upper_left_corner;
 		color = Color.BLACK;
+		font = new Font("TimesRoman", Font.PLAIN, 20);
 	}
 	/**
 	 * Creates a new DrawText without any given text
@@ -31,6 +34,7 @@ public class DrawText {
 		this.upper_left_corner = upper_left_corner;
 		text = null;
 		color = Color.BLACK;
+		font = new Font("TimesRoman", Font.PLAIN, 20);
 	}
 	/**
 	 * Links a DrawText with a block so that the text will
@@ -70,7 +74,18 @@ public class DrawText {
 	 */
 	public void draw(Graphics g){
 		g.setColor(color);
+		if(!g.getFont().equals(font)){
+			g.setFont(font);
+		}
 		g.drawString(text, upper_left_corner.X(), upper_left_corner.Y());
+	}
+	/**
+	 * Changes the font of the text
+	 * @param f
+	 */
+	public DrawText setFont(Font f){
+		font = f;
+		return this;
 	}
 	/**
 	 * Draws the given text and disregards stored text
@@ -81,6 +96,9 @@ public class DrawText {
 	 */
 	public void draw(Graphics g, String s){
 		g.setColor(color);
+		if(!g.getFont().equals(font)){
+			g.setFont(font);
+		}
 		g.drawString(s, upper_left_corner.X(), upper_left_corner.Y());
 	}
 }

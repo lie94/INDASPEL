@@ -10,6 +10,7 @@ import hitboxes.safeblocks.SafeBlockCycle;
 import hitboxes.safeblocks.SafeBlockPath;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -26,7 +27,7 @@ public class GameState implements KeyListener {
 	private Map currentMap;
 	private Player player;
 	private Map[] maps;
-	private DrawText text;
+	private DrawText text, death;
 	private boolean[] directions; 	/* Upp 		index 0
 									 * H�ger 	index 1
 									 * Ner 		index 2
@@ -42,6 +43,7 @@ public class GameState implements KeyListener {
 		maps = new Map[3];
 		//FPS counter at top right corner
 		text = new DrawText(new Coord(0,10));
+		death = new DrawText(Map.getMiddle().add(-Map.WIDTH / 3,0)).setText("You have died. \n Press space to continue").setFont(new Font("TimeRoman",Font.PLAIN,50));
 		this.r = r;
 		try {
 			//MENUTEST
@@ -58,7 +60,8 @@ public class GameState implements KeyListener {
 		}
 		// Starting map
 		currentMap = maps[0];
-		killPlayer();
+		respawn();
+		player.setDead(false);
 	}
 	/**
 	 * Draws everything on that is happening on the current map
@@ -77,42 +80,44 @@ public class GameState implements KeyListener {
 			sb.draw(g);
 		}
 		text.draw(g,"" + r.fps);
-		
+		if(player.isDead()){
+			death.draw(g);
+		}
+			
 	}
 	/**
 	 * Updates everything that is happening on the current map
 	 */
 	public boolean update(){
-		/*for(int i = 0; i < 4; i++){
-			if(directions[i]){
-				player.move(i);
+		if(!player.isDead()){	
+			player.move(directions);
+			for(KillBlock kb : currentMap.killblocks){
+				kb.update();
+				if(kb.shareHitbox(player)){
+					player.setDead(true);
+					return true;
+				}
 			}
-		}*/
-		
-		player.move(directions);
-		for(KillBlock kb : currentMap.killblocks){
-			kb.update();
-			if(kb.shareHitbox(player)){
-				killPlayer();
+			for(SafeBlock sb : currentMap.safeblocks){
+				sb.update();
+				sb.playerColiding(player);
 			}
-		}
-		for(SafeBlock sb : currentMap.safeblocks){
-			sb.update();
-			sb.playerColiding(player);
-		}
-		for(SafeBlock sb : currentMap.safeblocks){
-			if(sb.shareHitbox(player)){
-				killPlayer();
+			for(SafeBlock sb : currentMap.safeblocks){
+				if(sb.shareHitbox(player)){
+					player.setDead(true);
+					return true;
+				}
 			}
-		}
-		for(Exit e : currentMap.exits){
-			if(player.isIn(e)){
-				int code = e.getExitCode();
-				if(code == -1){
-					return false;
-				}else{
-					currentMap = maps[code];
-					killPlayer();
+			for(Exit e : currentMap.exits){
+				if(player.isIn(e)){
+					int code = e.getExitCode();
+					if(code == -1){
+						return false;
+					}else{
+						currentMap = maps[code];
+						respawn();
+						return true;
+					}
 				}
 			}
 		}
@@ -186,12 +191,14 @@ public class GameState implements KeyListener {
 	/**
 	 * Kills the player and resets the current map
 	 */
-	private void killPlayer(){
+	private void respawn(){
 		player.setC(currentMap.getSpawn());
 		resetToMap(Arrays.asList(maps).indexOf(currentMap));
+		player.setDead(false);
 	}
 	@Override
 	public void keyPressed(KeyEvent arg0) {
+		System.out.println(arg0.getKeyCode());
 		switch(arg0.getKeyCode()){
 		case 38:
 			directions[0] = true;
@@ -204,6 +211,10 @@ public class GameState implements KeyListener {
 			break;
 		case 37:
 			directions[3] = true;
+			break;
+		case 32: //SPACE
+			player.setDead(false);
+			respawn();																	
 			break;
 		default:
 		}
@@ -226,6 +237,6 @@ public class GameState implements KeyListener {
 		default:
 		}
 	}
-	@Override
+	@Override 
 	public void keyTyped(KeyEvent arg0) {}
 }
