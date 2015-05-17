@@ -198,7 +198,6 @@ public class GameState implements KeyListener {
 	}
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		System.out.println(arg0.getKeyCode());
 		switch(arg0.getKeyCode()){
 		case 38:
 			directions[0] = true;

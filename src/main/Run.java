@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 
 public class Run extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1L;
+	private static final int TARGET_FPS = 60;
 	private final String NAME = "BOC";
 	private final int MAXW = 1280, MAXH = 720;
 	private JFrame frame;
@@ -22,12 +23,16 @@ public class Run extends Canvas implements Runnable{
 	 * @param args
 	 */
 	public static void main(String[] args){
+		//Får spelet att fungera bra på unixbaserade operativsystem
+		//Utan detta blir spelet hackigt
+		System.setProperty("sun.java2d.opengl", "True");
 		new Run().start();
 	}
 	/**
 	 * Initiates the frame and starts the key listener
 	 */
 	Run(){
+		
 		setMinimumSize(new Dimension(MAXW,MAXH));
 		setMaximumSize(new Dimension(MAXW,MAXH));
 		setPreferredSize(new Dimension(MAXW,MAXH));
@@ -78,13 +83,13 @@ public class Run extends Canvas implements Runnable{
 			frames++;
 			running = gs.update();
 			long t1 = System.currentTimeMillis();
-			if(t1-t0 < 1000 / 60){
-				while(t1-t0 < 1000.0 / 60){
+			if(t1-t0 < 1000.0 / TARGET_FPS){
+				while(t1-t0 < 1000.0 / TARGET_FPS){
 					t1 = System.currentTimeMillis();
 				}
 			}
 			if(System.currentTimeMillis() - time > 100){
-				fps = (int) (frames / 0.1);
+				fps = (int) (frames / 10.0);
 				frames = 0;
 				time = System.currentTimeMillis();
 			}
