@@ -7,7 +7,7 @@ import navigation.Vector;
 
 
 public class Player extends Hitbox{
-	public static final int SPEED = 4, WIDTH = 45, HEIGHT = 45;
+	public static final int SPEED = 8, WIDTH = 45, HEIGHT = 45;
 	private boolean dead;
 	public Player(Coord upper_left_corner, Coord size){
 		super(upper_left_corner, size);

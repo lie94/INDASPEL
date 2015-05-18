@@ -27,13 +27,13 @@ public class GameState implements KeyListener {
 	private Map currentMap;
 	private Player player;
 	private Map[] maps;
-	private DrawText text, death;
+	private DrawText death;
 	private boolean[] directions; 	/* Upp 		index 0
 									 * H�ger 	index 1
 									 * Ner 		index 2
 									 * V�nster 	index 3
 									 */
-	private Run r;
+	//private Run r;
 	/**
 	 * Initiates the backgrounds and spawns of the maps, but not the blocks in the maps
 	 */
@@ -42,9 +42,9 @@ public class GameState implements KeyListener {
 		directions = new boolean[4];
 		maps = new Map[3];
 		//FPS counter at top right corner
-		text = new DrawText(new Coord(0,10));
+		//text = new DrawText(new Coord(0,10));
 		death = new DrawText(Map.getMiddle().add(-Map.WIDTH / 3,0)).setText("You have died. \n Press space to continue").setFont(new Font("TimeRoman",Font.PLAIN,50));
-		this.r = r;
+		//this.r = r;
 		try {
 			//MENUTEST
 			maps[0] = new Map(Color.WHITE														,Map.getMiddle()	);
@@ -79,7 +79,7 @@ public class GameState implements KeyListener {
 		for(SafeBlock sb : currentMap.safeblocks){
 			sb.draw(g);
 		}
-		text.draw(g,"" + r.fps);
+		//text.draw(g,"" + r.fps);
 		if(player.isDead()){
 			death.draw(g);
 		}
