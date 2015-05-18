@@ -1,30 +1,22 @@
 package main;
-import hitboxes.Block;
+
 import hitboxes.Exit;
 import hitboxes.Player;
 import hitboxes.killblocks.KillBlock;
-import hitboxes.killblocks.KillBlockCycle;
-import hitboxes.killblocks.KillBlockPath;
 import hitboxes.safeblocks.SafeBlock;
-import hitboxes.safeblocks.SafeBlockCycle;
-import hitboxes.safeblocks.SafeBlockPath;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Random;
-
-import javax.imageio.ImageIO;
 
 import navigation.Coord;
 
 
 public class GameState implements KeyListener {
 	private Map currentMap;
+	private int currentMapIndex;
 	private Player player;
 	private Map[] maps;
 	private DrawText death;
@@ -33,33 +25,32 @@ public class GameState implements KeyListener {
 									 * Ner 		index 2
 									 * V�nster 	index 3
 									 */
-	//private Run r;
 	/**
 	 * Initiates the backgrounds and spawns of the maps, but not the blocks in the maps
 	 */
 	GameState(Run r){
 		player = new Player(new Coord(0,0),new Coord(45,45));
 		directions = new boolean[4];
-		maps = new Map[3];
 		//FPS counter at top right corner
 		//text = new DrawText(new Coord(0,10));
 		death = new DrawText(Map.getMiddle().add(-Map.WIDTH / 3,0)).setText("You have died. \n Press space to continue").setFont(new Font("TimeRoman",Font.PLAIN,50));
 		//this.r = r;
 		try {
 			//MENUTEST
-			maps[0] = new Map(Color.WHITE														,Map.getMiddle()	);
-			resetToMap(0);
+			maps = MapParser.parseMaps();
+			//resetMap(0);
 			//MECHANICSTEST
-			maps[1] = new Map(ImageIO.read(this.getClass().getResource("/res/images/bg1.jpg"))	,new Coord(0,0)		);
-			resetToMap(1);
+			//maps[1] = new Map(ImageIO.read(this.getClass().getResource("/res/images/bg1.jpg"))	,new Coord(0,0)		);
+			//resetMap(1);
 			//STRESSTEST
-			maps[2] = new Map(Color.GRAY		 												,new Coord(0,0)		);
-			resetToMap(2);
+			//maps[2] = new Map(Color.GRAY		 												,new Coord(0,0)		);
+			//resetMap(2);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		// Starting map
 		currentMap = maps[0];
+		currentMapIndex = 0;
 		respawn();
 		player.setDead(false);
 	}
@@ -114,7 +105,7 @@ public class GameState implements KeyListener {
 					if(code == -1){
 						return false;
 					}else{
-						currentMap = maps[code];
+						currentMapIndex = code;
 						respawn();
 						return true;
 					}
@@ -128,15 +119,21 @@ public class GameState implements KeyListener {
 	 * @param i
 	 * @return 
 	 */
-	private void resetToMap(int i){
-		Map temp = maps[i].removeAll();
-		switch(i){
-		case 0:
-			Coord size = new Coord(2 * Map.WIDTH / 10, 360);
+	/*private void resetMap(int i){
+		if(i < 1){
+			try {
+				maps[i] = MapParser.parseMap(i);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else{
+			return;
+		}
+		//switch(i){
+			/*Coord size = new Coord(2 * Map.WIDTH / 10, 360);
 			temp.add(new Exit(new Coord(7 * Map.WIDTH / 10,180), size, 1).setText("Start Game"));
-			temp.add(new Exit(new Coord(1 * Map.WIDTH/10,180), size, -1).setText("Exit Game"));
-			break;
-		case 1:
+			temp.add(new Exit(new Coord(1 * Map.WIDTH/10,180), size, -1).setText("Exit Game"));*/
+		/*case 1:
 			 
 			// Safeblocks
 			int y = 720 / 3;
@@ -187,13 +184,18 @@ public class GameState implements KeyListener {
 				temp.add(new KillBlockPath(new Coord(minx + rn.nextInt(maxx - minx), miny + rn.nextInt(maxy - miny)),new Coord(minx + rn.nextInt(maxx - minx), miny + rn.nextInt(maxy - miny) )));
 			}
 		}
-	}
+	}*/
 	/**
 	 * Kills the player and resets the current map
 	 */
 	private void respawn(){
+		try {
+			currentMap = MapParser.parseMap(currentMapIndex);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		player.setC(currentMap.getSpawn());
-		resetToMap(Arrays.asList(maps).indexOf(currentMap));
+
 		player.setDead(false);
 	}
 	@Override

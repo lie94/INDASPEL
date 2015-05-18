@@ -1,6 +1,8 @@
 package main;
 
 import hitboxes.Exit;
+import hitboxes.killblocks.KillBlock;
+import hitboxes.safeblocks.SafeBlock;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -69,8 +71,7 @@ public class MapParser {
 					if(c == null){
 						c = stringToColor(line);
 						if(c == null){
-							System.out.println(line);
-							b = ImageIO.read(new File("src/res/images/bg/" + line + ".jpg"));
+							b = ImageIO.read(new File("src/res/images/bg" + line + ".jpg"));
 							if(b == null){
 								throwIAE(i,line);
 							}
@@ -81,7 +82,10 @@ public class MapParser {
 				}else if(curr.equals("SPAWN")){
 					if(spawn == null && line.matches("\\d+,\\d+")){
 						spawn = stringToCoords(line)[0];
-						temp = new Map(c,spawn);
+						if(c == null){
+							temp = new Map(b,spawn);
+						}else
+							temp = new Map(c,spawn);
 					}else{
 						throwIAE(i,line);
 					}
@@ -94,20 +98,43 @@ public class MapParser {
 							Coord[] coords = stringToCoords(parts[1]);
 							String[] inputs = parts[0].split(",");
 							if(coords.length == 2 && inputs.length == 2){
-								temp.add(new Exit(coords[0],coords[1],Integer.parseInt(inputs[0])).setText(inputs[1]));
+								temp.add(new Exit(coords[1],coords[0],Integer.parseInt(inputs[0])).setText(inputs[1]));
 							}else if(coords.length == 1 && inputs.length == 2){
 								temp.add(new Exit(coords[0],Integer.parseInt(inputs[0])).setText(inputs[1]));
 							}else if(coords.length == 2 && inputs.length == 1){
+								temp.add(new Exit(coords[1],coords[0],Integer.parseInt(inputs[0])));
+							}else if(coords.length == 1 && inputs.length == 1){
 								temp.add(new Exit(coords[0],Integer.parseInt(inputs[0])));
 							}else{
 								throwIAE(i,line);
 							}
 						}
-					}else{
+					}else{	
 						throwIAE(i,line);
 					}
+				}else if(curr.equals("S")){
+					if(line.matches("\\d+,\\d+(-\\d,\\d){0,1}")){
+						Coord[] coords = stringToCoords(line);
+						if(coords.length == 1){
+							temp.add(new SafeBlock(coords[0]));
+						}else if(coords.length == 2){
+							temp.add(new SafeBlock(coords[1],coords[0]));
+						}else{
+							throwIAE(i,line);
+						}
+					}
+				}else if(curr.equals("K")){
+					if(line.matches("\\d+,\\d+(-\\d,\\d){0,1}")){
+						Coord[] coords = stringToCoords(line);
+						if(coords.length == 1){
+							temp.add(new KillBlock(coords[0]));
+						}else if(coords.length == 2){
+							temp.add(new KillBlock(coords[1],coords[0]));
+						}else{
+							throwIAE(i,line);
+						}
+					}
 				}else{
-					//throwIAE(i,line);
 				}
 			}
 			line = file.readLine();
@@ -125,7 +152,6 @@ public class MapParser {
 	 */
 	public static Coord[] stringToCoords(String s){
 		ArrayList<String> text_coords  = new ArrayList<String>(Arrays.asList(s.replace(" ", "").split("-")));
-		
 		for(int i = text_coords.size() - 1; i >= 0; i -- ){
 			if(text_coords.get(i).equals("")){
 				text_coords.remove(i);

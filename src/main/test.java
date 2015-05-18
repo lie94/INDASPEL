@@ -90,6 +90,14 @@ public class test extends TestCase{
 		assertEquals(1,coords.length);
 		assertTrue(coords[0].equals(new Coord(34,56)));
 		assertEquals(-1,Integer.parseInt("-1"));
-		MapParser.parseMaps();
+		Map map0 = MapParser.parseMap(0);
+		assertEquals(2,map0.exits.size());
+		assertEquals(0,map0.killblocks.size());
+		assertEquals(4,map0.safeblocks.size()); // All maps have atleast 4 
+												// safeblock around the edges of the map
+		Map map1 = MapParser.parseMap(1);
+		assertEquals(1,map1.exits.size());
+		assertEquals(5,map1.safeblocks.size());
+												
 	}
 }
