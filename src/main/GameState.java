@@ -18,7 +18,6 @@ public class GameState implements KeyListener {
 	private Map currentMap;
 	private int currentMapIndex;
 	private Player player;
-	private Map[] maps;
 	private DrawText death;
 	private boolean[] directions; 	/* Upp 		index 0
 									 * H�ger 	index 1
@@ -34,22 +33,12 @@ public class GameState implements KeyListener {
 		//FPS counter at top right corner
 		//text = new DrawText(new Coord(0,10));
 		death = new DrawText(Map.getMiddle().add(-Map.WIDTH / 3,0)).setText("You have died. \n Press space to continue").setFont(new Font("TimeRoman",Font.PLAIN,50));
-		//this.r = r;
 		try {
-			//MENUTEST
-			maps = MapParser.parseMaps();
-			//resetMap(0);
-			//MECHANICSTEST
-			//maps[1] = new Map(ImageIO.read(this.getClass().getResource("/res/images/bg1.jpg"))	,new Coord(0,0)		);
-			//resetMap(1);
-			//STRESSTEST
-			//maps[2] = new Map(Color.GRAY		 												,new Coord(0,0)		);
-			//resetMap(2);
+			currentMap = MapParser.parseMap(0);
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// Starting map
-		currentMap = maps[0];
 		currentMapIndex = 0;
 		respawn();
 		player.setDead(false);
@@ -64,11 +53,12 @@ public class GameState implements KeyListener {
 			e.draw(g);
 		}
 		player.draw(g);
-		for(KillBlock kb : currentMap.killblocks){
-			kb.draw(g);
-		}
+		
 		for(SafeBlock sb : currentMap.safeblocks){
 			sb.draw(g);
+		}
+		for(KillBlock kb : currentMap.killblocks){
+			kb.draw(g);
 		}
 		//text.draw(g,"" + r.fps);
 		if(player.isDead()){

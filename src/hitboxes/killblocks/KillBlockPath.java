@@ -32,6 +32,7 @@ public class KillBlockPath extends KillBlock{
 	 */
 	public KillBlockPath setSize(Coord size){
 		d = size;
+		refresh();
 		return this;
 	}
 	/**

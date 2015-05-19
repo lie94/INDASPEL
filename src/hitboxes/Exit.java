@@ -8,6 +8,7 @@ import main.DrawText;
 public class Exit extends Block{
 	private static final int WIDTH = 100, HEIGHT = 100;
 	private int exitCode;
+	private boolean visible;
 	private DrawText text;
 	/**
 	 * Initiates an Exit
@@ -21,6 +22,7 @@ public class Exit extends Block{
 		super(upper_left_corner, size);
 		exitCode = exit_code; 
 		color = Color.CYAN;
+		visible = true;
 	}
 	/**
 	 * Initiates an Exit with default size
@@ -31,6 +33,7 @@ public class Exit extends Block{
 		super(upper_left_corner, new Coord(WIDTH,HEIGHT));
 		exitCode = exit_code;
 		color = Color.CYAN;
+		visible = true;
 	}
 	/**
 	 * Returns where the exit leads. 
@@ -63,17 +66,26 @@ public class Exit extends Block{
 		return this;
 	}
 	/**
+	 * Changes the visibility of the block
+	 */
+	public Exit setVisible(boolean b){
+		visible = b;
+		return this;
+	}
+	/**
 	 * Draws the block
 	 */
 	public void draw(Graphics g) {
-		if(g.getColor() != color){
-			g.setColor(color);
-		}
-		g.fillRect(X(), Y(), Width(), Height());
-		draw_border(g);
-		if(text != null){
-			//TODO Display text in the middle of the exit
-			text.draw(g);
+		if(visible){
+			if(g.getColor() != color){
+				g.setColor(color);
+			}
+			g.fillRect(X(), Y(), Width(), Height());
+			draw_border(g);
+			if(text != null){
+				//TODO Display text in the middle of the exit
+				text.draw(g);
+			}
 		}
 	}
 }

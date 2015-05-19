@@ -1,5 +1,4 @@
 package main;
-import java.io.IOException;
 
 import hitboxes.Hitbox;
 import hitboxes.Player;
@@ -69,35 +68,5 @@ public class test extends TestCase{
 		Coord c1 = new Coord(2,4);
 		Coord c2 = new Coord(4,2);
 		assertTrue(new Coord(2.0,-2.0).equals(c2.sub(c1)));
-	}
-	/**
-	 * Tests the MapParser class
-	 * @throws IOException 
-	 */
-	public void testMapParser() throws IOException{
-		
-		Coord[] coords = MapParser.stringToCoords("-100,40-95,90-50,30");
-		assertEquals(3,coords.length);
-		assertTrue(coords[0].equals(new Coord(100,40)	));
-		assertTrue(coords[1].equals(new Coord(95,90)	));
-		assertTrue(coords[2].equals(new Coord(50,30)	));
-		coords = MapParser.stringToCoords("--");
-		assertEquals(0,coords.length);
-		coords = MapParser.stringToCoords("-34,56");
-		assertEquals(1,coords.length);
-		assertTrue(coords[0].equals(new Coord(34,56)));
-		coords = MapParser.stringToCoords("34,56");
-		assertEquals(1,coords.length);
-		assertTrue(coords[0].equals(new Coord(34,56)));
-		assertEquals(-1,Integer.parseInt("-1"));
-		Map map0 = MapParser.parseMap(0);
-		assertEquals(2,map0.exits.size());
-		assertEquals(0,map0.killblocks.size());
-		assertEquals(4,map0.safeblocks.size()); // All maps have atleast 4 
-												// safeblock around the edges of the map
-		Map map1 = MapParser.parseMap(1);
-		assertEquals(1,map1.exits.size());
-		assertEquals(5,map1.safeblocks.size());
-												
 	}
 }
