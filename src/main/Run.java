@@ -60,7 +60,7 @@ public class Run extends Canvas implements Runnable{
 		running = true;
 		gs = new GameState(this);
 		addKeyListener((KeyListener) gs);
-		new Thread(new Sound("src/res/sound/BPDG.wav")).start();
+		new Thread(new Sound(gs)).start();
 		new Thread(this).start();
 	}
 	/**

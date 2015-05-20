@@ -17,11 +17,11 @@ import hitboxes.safeblocks.SafeBlockPath;
 import navigation.Coord;
 
 public class MapParser {
-	public static Map parseMap(final int i) throws IOException {
+	public static Map parseMap(GameState gs, final int i) throws IOException {
 		Map temp = null;
 		switch(i){
 		case 0:
-			temp = new Map(ImageIO.read(new File("src/res/images/bg0.jpg")),new Coord((Map.WIDTH - Block.WIDTH) / 2, (Map.HEIGHT - Block.WIDTH) / 2));
+			temp = new Map(ImageIO.read(gs.getClass().getResourceAsStream("/res/images/bg0.jpg")),new Coord((Map.WIDTH - Block.WIDTH) / 2, (Map.HEIGHT - Block.WIDTH) / 2));
 			temp.add(new Exit(	
 					new Coord(976,0), 							//ULC
 					new Coord(1280 - 976,720),					//SIZE 
@@ -32,7 +32,7 @@ public class MapParser {
 					-1).setVisible(false));
 			break;
 		case 1:
-			temp = new Map(ImageIO.read(new File("src/res/images/bg1.jpg"))	,new Coord(0,(Map.HEIGHT - Block.HEIGHT) / 2)		);
+			temp = new Map(ImageIO.read(gs.getClass().getResourceAsStream("/res/images/bg1.jpg"))	,new Coord(0,(Map.HEIGHT - Block.HEIGHT) / 2)		);
 			//SAFEBLOCKS
 			Coord sizeSB = new Coord(Map.WIDTH - (Map.WIDTH) / 12, (720 - 200) / 2);
 			temp.add(new SafeBlock(				//Upper black box
