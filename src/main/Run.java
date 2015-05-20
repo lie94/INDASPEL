@@ -25,7 +25,8 @@ public class Run extends Canvas implements Runnable{
 	public static void main(String[] args){
 		//Får spelet att fungera bra på unixbaserade operativsystem
 		//Utan detta blir spelet hackigt
-		System.setProperty("sun.java2d.opengl", "True");
+		if(!System.getProperty("os.name").startsWith("Windows"))
+			System.setProperty("sun.java2d.opengl", "True");
 		new Run().start();
 	}
 	/**
