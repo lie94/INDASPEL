@@ -23,13 +23,12 @@ public class Sound implements Runnable{
 	@Override
 	public void run() {
 		try {
-			AudioInputStream soundIn = AudioSystem.getAudioInputStream(gs.getClass().getResourceAsStream("/res/sound/BPDG.wav"));
-			AudioFormat format = soundIn.getFormat();
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(GameState.class.getResource("/res/sound/BPDG.wav"));
+			AudioFormat format = audioStream.getFormat();
 	   		DataLine.Info info = new DataLine.Info(Clip.class, format);
-
 	   		Clip clip = (Clip)AudioSystem.getLine(info);
 	   		
-			clip.open(soundIn);
+			clip.open(audioStream);
 			clip.start();
 			} catch (LineUnavailableException e) {
 				// TODO Auto-generated catch block

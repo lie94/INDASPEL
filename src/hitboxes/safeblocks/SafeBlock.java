@@ -17,7 +17,7 @@ public class SafeBlock extends Block{
 	public SafeBlock(Coord upper_left_corner) {
 		super(upper_left_corner);
 		passable = false;
-		color = Color.GREEN;
+		color = Color.BLACK;
 	}
 	/**
 	 * Creates a safeblock with the given size

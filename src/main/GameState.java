@@ -30,13 +30,10 @@ public class GameState implements KeyListener {
 	GameState(Run r){
 		player = new Player(new Coord(0,0),new Coord(45,45));
 		directions = new boolean[4];
-		//FPS counter at top right corner
-		//text = new DrawText(new Coord(0,10));
 		death = new DrawText(Map.getMiddle().add(-Map.WIDTH / 3,0)).setText("You have died. Press space to continue").setFont(new Font("TimeRoman",Font.PLAIN,50));
 		try {
 			currentMap = MapParser.parseMap(this,0);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		currentMapIndex = 0;
@@ -105,77 +102,6 @@ public class GameState implements KeyListener {
 		return true;
 	}
 	/**
-	 * Resets/Initiates the map with index i
-	 * @param i
-	 * @return 
-	 */
-	/*private void resetMap(int i){
-		if(i < 1){
-			try {
-				maps[i] = MapParser.parseMap(i);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}else{
-			return;
-		}
-		//switch(i){
-			/*Coord size = new Coord(2 * Map.WIDTH / 10, 360);
-			temp.add(new Exit(new Coord(7 * Map.WIDTH / 10,180), size, 1).setText("Start Game"));
-			temp.add(new Exit(new Coord(1 * Map.WIDTH/10,180), size, -1).setText("Exit Game"));*/
-		/*case 1:
-			 
-			// Safeblocks
-			int y = 720 / 3;
-			int dx = 1280 / 5;
-			temp.add(new SafeBlock(		new Coord(dx - Block.WIDTH					, y	- Block.WIDTH / 2			)));
-			temp.add(new SafeBlockPath(		new Coord(dx								, y - Block.WIDTH / 2			), 
-											new Coord(2 * dx - Block.WIDTH / 2			, y - Block.WIDTH / 2			)));
-			temp.add(new SafeBlockCycle(	new Coord(dx * 3 - (Block.WIDTH * 3) / 2	, y - Block.HEIGHT * (3 / 2)	),
-											new Coord(dx * 3 + Block.WIDTH / 2			, y - Block.HEIGHT * (3 / 2)	),
-											new Coord(dx * 3 + Block.WIDTH / 2			, y + Block.HEIGHT / 2			),
-											new Coord(dx * 3 - (Block.WIDTH * 3) / 2	, y + Block.HEIGHT / 2			)).setSpeed(2 * Block.SPEED));
-			// Killblocks
-			y = 2 * y;
-			temp.add(new KillBlock(	new Coord(dx - Block.WIDTH						, y	- Block.WIDTH / 2			)));
-			temp.add(new KillBlockPath(	new Coord(dx								, y - Block.WIDTH / 2			), 
-											new Coord(2 * dx - Block.WIDTH / 2			, y - Block.WIDTH / 2			)));
-			temp.add(new KillBlockCycle(	new Coord(dx * 3 - (Block.WIDTH * 3) / 2	, y - Block.HEIGHT * (3 / 2)	),
-											new Coord(dx * 3 + Block.WIDTH / 2			, y - Block.HEIGHT * (3 / 2)	),
-											new Coord(dx * 3 + Block.WIDTH / 2			, y + Block.HEIGHT / 2			),
-											new Coord(dx * 3 - (Block.WIDTH * 3) / 2	, y + Block.HEIGHT / 2			)));
-			temp.add(new SafeBlock(Map.getMiddle()));
-			//Exits
-			temp.add(new Exit(new Coord(Map.WIDTH - Block.WIDTH, Map.HEIGHT / 2 - Block.HEIGHT / 2), 2));
-			break;
-		case 2:
-			int size1 = 5000; //Dubbla denna siffran blir block-antalet
-								// 20 000 : 60 fps
-								// 25 000 : 50 fps
-								// 50 000 : 24 fps
-								//100 000 : 12 fps
-								//200 000 : 6 fps
-			Random rn = new Random();
-			//SB
-			int minx = Map.WIDTH / 2;
-			int maxx = Map.WIDTH;
-			int miny = 0;
-			int maxy = Map.HEIGHT;
-			
-			for(int j = 0; j < size1; j++){
-				temp.add(new SafeBlockPath(new Coord(minx + rn.nextInt(maxx - minx), miny + rn.nextInt(maxy - miny)),new Coord(minx + rn.nextInt(maxx - minx), miny + rn.nextInt(maxy - miny) )));
-			}
-			//KB
-			minx = 0;
-			maxx = Map.WIDTH;
-			miny = Map.HEIGHT / 2;
-			maxy = Map.HEIGHT;
-			for(int j = 0; j < size1; j++){
-				temp.add(new KillBlockPath(new Coord(minx + rn.nextInt(maxx - minx), miny + rn.nextInt(maxy - miny)),new Coord(minx + rn.nextInt(maxx - minx), miny + rn.nextInt(maxy - miny) )));
-			}
-		}
-	}*/
-	/**
 	 * Kills the player and resets the current map
 	 */
 	private void respawn(){
@@ -204,9 +130,14 @@ public class GameState implements KeyListener {
 			directions[3] = true;
 			break;
 		case 32: //SPACE
-			player.setDead(false);
-			respawn();																	
+			if(player.isDead()){
+				player.setDead(false);
+				respawn();
+			}															
 			break;
+		case 82: //r
+			currentMapIndex = 0;
+			respawn();
 		default:
 		}
 	}
