@@ -32,7 +32,7 @@ public class GameState implements KeyListener {
 		directions = new boolean[4];
 		//FPS counter at top right corner
 		//text = new DrawText(new Coord(0,10));
-		death = new DrawText(Map.getMiddle().add(-Map.WIDTH / 3,0)).setText("You have died. \n Press space to continue").setFont(new Font("TimeRoman",Font.PLAIN,50));
+		death = new DrawText(Map.getMiddle().add(-Map.WIDTH / 3,0)).setText("You have died. Press space to continue").setFont(new Font("TimeRoman",Font.PLAIN,50));
 		try {
 			currentMap = MapParser.parseMap(0);
 		} catch (IOException e) {

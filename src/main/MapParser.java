@@ -62,14 +62,23 @@ public class MapParser {
 					new Coord(Map.WIDTH / 2							,Map.HEIGHT - (sizeSB.Y() / 2 - Block.HEIGHT / 2))
 					).setSize(sizeKB).setPercent(75));
 			temp.add(new KillBlockPath(
-					new Coord((Map.WIDTH * 5/ 6) - Block.WIDTH		,sizeSB.Y() / 2 - Block.HEIGHT / 2),
-					new Coord((Map.WIDTH * 5/ 6) - Block.WIDTH		,Map.HEIGHT - (sizeSB.Y() / 2 - Block.HEIGHT / 2)
+					new Coord((Map.WIDTH * 5 / 6) - Block.WIDTH		,sizeSB.Y() / 2 - Block.HEIGHT / 2),
+					new Coord((Map.WIDTH * 5 / 6) - Block.WIDTH		,Map.HEIGHT - (sizeSB.Y() / 2 - Block.HEIGHT / 2)
 					)).setPercent(75));
 			//EXITS
 			temp.add(new Exit(
 					new Coord((Map.WIDTH * 11)/ 12,sizeSB.Y()),
 					new Coord(Map.WIDTH / 6, 200),
 					2
+					));
+			break;
+		case 2:
+			temp = new Map(ImageIO.read(new File("src/res/images/sprite.jpg"))	,new Coord(0,(Map.HEIGHT - Block.HEIGHT) / 2));
+			//EXITS
+			temp.add(new Exit(
+					new Coord((Map.WIDTH * 11)/ 12,720 / 3),
+					new Coord(Map.WIDTH / 6, 200),
+					0
 					));
 			break;
 		}

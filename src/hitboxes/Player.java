@@ -101,8 +101,12 @@ public class Player extends Hitbox{
 	 * Draws the player
 	 */
 	public void draw(Graphics g){
-		g.setColor(Color.YELLOW);
+		g.setColor(Color.BLUE);
 		g.fillRect(X(), Y(), Width(), Height());
+		g.setColor(Color.YELLOW);
+		int thickness = 10;
+		g.fillRect(X() + thickness, Y() + thickness, Width() - 2 * thickness, Height() - 2 * thickness);
+	
 	}
 	/**
 	 * Returns a copy of the player
