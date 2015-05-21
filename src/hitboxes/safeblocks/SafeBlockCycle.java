@@ -1,5 +1,7 @@
 package hitboxes.safeblocks;
 
+import java.awt.Color;
+
 import navigation.Coord;
 import navigation.Vector;
 
@@ -13,6 +15,7 @@ public class SafeBlockCycle extends SafeBlockPath{
 	 */
 	public SafeBlockCycle(Coord ... path){
 		this.path = path;
+		color = Color.GREEN;
 		c = path[0];
 		count = 0;
 		index = 0;

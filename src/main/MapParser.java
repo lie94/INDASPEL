@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import hitboxes.Block;
 import hitboxes.Exit;
+import hitboxes.Player;
 import hitboxes.killblocks.KillBlock;
 import hitboxes.killblocks.KillBlockCycle;
 import hitboxes.killblocks.KillBlockPath;
@@ -73,14 +74,184 @@ public class MapParser {
 					));
 			break;
 		case 2:
-			temp = new Map(ImageIO.read(new File("src/res/images/sprite.jpg"))	,new Coord(0,(Map.HEIGHT - Block.HEIGHT) / 2));
+			Coord sizeSB2 = new Coord(Map.WIDTH - (Map.WIDTH) / 12, (720 - 200) / 2);
+			temp = new Map(Color.WHITE	,new Coord(0,(Map.HEIGHT - Block.HEIGHT) / 2)		);
+			//SAFEBLOCKS
+			temp.add(new SafeBlock(new Coord(0,0),				//Upper black box
+					new Coord(Map.WIDTH,42)).setColor(Color.BLACK));
+			temp.add(new SafeBlock(new Coord(0,0),				//Right black box
+					new Coord(42,Map.HEIGHT)).setColor(Color.BLACK));
+			temp.add(new SafeBlock(new Coord(Map.WIDTH-42,0),		//left	
+					new Coord(42,Map.HEIGHT)).setColor(Color.BLACK));
+			temp.add(new SafeBlock(new Coord(0,Map.HEIGHT-42),		//lower		
+					new Coord(Map.WIDTH,42)).setColor(Color.BLACK));
+			temp.add(new SafeBlock(new Coord(330,42),				
+					new Coord(930-330+20, 153-43)).setColor(Color.BLACK)); //mid övre
+			
+			temp.add(new SafeBlock(new Coord(330,253),				
+					new Coord(930-330+20, 60)).setColor(Color.BLACK));		//mid mid
+			temp.add(new SafeBlock(new Coord(330,253+60),				
+					new Coord(15, 60)).setColor(Color.BLACK));		//mid mid vänster spalt övre
+			temp.add(new SafeBlock(new Coord(330,253+60+60+100),				
+					new Coord(15, 250)).setColor(Color.BLACK));		//mid mid vänster spalt nedre
+			temp.add(new SafeBlock(new Coord(950-15,253+60),				
+					new Coord(15, 60)).setColor(Color.BLACK));		//mid mid höger spalt övre
+			temp.add(new SafeBlock(new Coord(950-15,253+60+60+100),				
+					new Coord(15, 250)).setColor(Color.BLACK));		//mid mid höger spalt nedre
+			
+			temp.add(new SafeBlock(new Coord(445,413),				
+					new Coord(390, 40)).setColor(Color.BLACK));		//ön i mitten av allt
+			
+			temp.add(new SafeBlock(new Coord(345,553),				
+					new Coord(930-330+20-30, 160)).setColor(Color.BLACK));		//mid lägre
+			
+			temp.add(new SafeBlock(new Coord(42,250),				
+					new Coord(222-42,342-250)).setColor(Color.BLACK));	//övre vänstra
+			temp.add(new SafeBlock(new Coord(Map.WIDTH-222,250),				
+					new Coord(222-42, 342-250)).setColor(Color.BLACK));	//övre högra
+			
+			temp.add(new SafeBlock(new Coord(42,350+342-250),				
+					new Coord(222-42, Map.HEIGHT-350-342+250-142)).setColor(Color.BLACK)); //lägre vänstra
+			temp.add(new SafeBlock(new Coord(Map.WIDTH-222, 350+342-250),				
+					new Coord(222-42, Map.HEIGHT-350-342+250-142)).setColor(Color.BLACK));	//lägre högra
+			
+			temp.add(new SafeBlock(new Coord(142,132),				
+					new Coord(330-243, 250-242+20-10)).setColor(Color.BLACK)); //Midblock vänstra
+			temp.add(new SafeBlock(new Coord(1030+20,132),				
+					new Coord(330-243, 250-242+20-10)).setColor(Color.BLACK)); //Midblock högra
+			
+			//KILLBLOCKS
+			temp.add(new KillBlockPath(
+					new Coord(142-243+330+10, 42+10),
+					new Coord(142-243+330+10, Map.HEIGHT-142-10)).setSize(new Coord(80,80))); //högra KB
+			temp.add(new KillBlockPath(
+					new Coord(52, 160),
+					new Coord(1030+20+330-243+10, 160)).setSize(new Coord(80,80)).setSpeed(Player.SPEED * 3 / 4));	//Övre KB
+			temp.add(new KillBlockPath(
+					new Coord(960,42),
+					new Coord(960, Map.HEIGHT-142-10)).setSize(new Coord(80,80)));	//Vänstra KB
+			
+			temp.add(new KillBlockCycle(
+					new Coord(330+25,253+70),
+					new Coord(950-105,253+70),
+					new Coord(950-105,413+40+10),
+					new Coord(330+25, 413+40+10),
+					new Coord(330+25,253+70)).setSize(new Coord(80,80)).setSpeed(Player.SPEED * 5 / 4));
+			
+			temp.add(new KillBlockCycle(
+					new Coord(950-105,413+40+10),
+					new Coord(330+25, 413+40+10),
+					new Coord(330+25,253+70),
+					new Coord(950-105,253+70),
+					new Coord(950-105,413+40+10)).setSize(new Coord(80,80)).setSpeed(Player.SPEED * 5 / 4));
+			
 			//EXITS
 			temp.add(new Exit(
-					new Coord((Map.WIDTH * 11)/ 12,720 / 3),
+					new Coord((Map.WIDTH * 11)/ 12,sizeSB2.Y()),
 					new Coord(Map.WIDTH / 6, 200),
-					0
+					3
 					));
 			break;
+			
+		case 3:
+			temp = new Map(Color.WHITE,new Coord(0,Map.HEIGHT / 2 - Block.HEIGHT / 2));//ImageIO.read(new File("src/res/images/bg3.jpg"))	,new Coord(0,(Map.HEIGHT - Block.HEIGHT) / 2)		);
+			//SAFEBLOCKS
+			temp.add(new SafeBlock(new Coord(-5,521),				//Floor
+					new Coord(Map.WIDTH+10,250)).setColor(new Color(194, 129, 0)));
+			temp.add(new SafeBlock(new Coord(-5,497),				//Floor
+					new Coord(Map.WIDTH+10,521-497)).setColor(new Color(23, 106, 6)));
+			temp.add(new SafeBlock(new Coord(400,270),				
+					new Coord(80,80)).setColor(new Color(194, 129, 0)));//Boxes
+			temp.add(new SafeBlock(new Coord(480,270),				
+					new Coord(80,80)).setColor(new Color(194, 129, 0)));
+			temp.add(new SafeBlock(new Coord(560,270),				
+					new Coord(80,80)).setColor(new Color(194, 129, 0)));
+			temp.add(new SafeBlock(new Coord(640,270),				
+					new Coord(80,80)).setColor(new Color(194, 129, 0)));
+			temp.add(new SafeBlock(new Coord(720,270),				
+					new Coord(80,80)).setColor(new Color(194, 129, 0)));
+			
+			temp.add(new SafeBlock(new Coord(140,497-80+2),				
+					new Coord(80,80)).setColor(new Color(194, 129, 0)));
+			temp.add(new SafeBlock(new Coord(1068,497-80+2),				
+					new Coord(80,80)).setColor(new Color(194, 129, 0)));
+			
+			temp.add(new SafeBlock(new Coord(520,44),				
+					new Coord(80,80)).setColor(new Color(194, 129, 0)));
+			temp.add(new SafeBlock(new Coord(600,44),				
+					new Coord(80,80)).setColor(new Color(194, 129, 0)));
+			
+			temp.add(new SafeBlock(new Coord(400,190),				
+					new Coord(80,80)).setColor(new Color(194, 129, 0)));
+			temp.add(new SafeBlock(new Coord(720,190),				
+					new Coord(80,80)).setColor(new Color(194, 129, 0)));
+			//KILLBLOCKS
+			
+			temp.add(new KillBlockPath(new Coord(220,497-80+2),
+					new Coord(320,350),
+					new Coord(420, 497-80+2),
+					new Coord(520,350), 
+					new Coord(620,497-80+2),
+					new Coord(720,350),
+					new Coord(820,497-80+2),
+					new Coord(900,350),
+					new Coord(1068-80,497-80+2)).setSize(new Coord(80,80)).setSpeed(Player.SPEED * 3 / 2));
+			temp.add(new KillBlockPath(new Coord(480,190),
+					new Coord(560,120),
+					new Coord(720-80,190)).setSize(new Coord(80,80)).setSpeed(Player.SPEED / 3));
+			//EXITS
+			temp.add(new Exit(
+					new Coord((Map.WIDTH-80),497-80+2),
+					new Coord(80,80),
+					4
+					));
+			break;
+			
+		case 4:
+			temp = new Map(Color.WHITE, new Coord(26,35));//ImageIO.read(new File("src/res/images/bg5.jpg"))	,new Coord(26,35)		);
+			//KILLBLOCKS
+			temp.add(new KillBlockPath(
+					new Coord(358,35),
+					new Coord(60,304)).setSize(new Coord(80,80)));
+			temp.add(new KillBlockPath(
+					new Coord(60,304),
+					new Coord(358,35)).setSize(new Coord(80,80)));
+			temp.add(new KillBlockPath(
+					new Coord(689,35),
+					new Coord(60,602)).setSize(new Coord(80,80)));
+			temp.add(new KillBlockPath(
+					new Coord(60,602),
+					new Coord(689,35)).setSize(new Coord(80,80)));
+			temp.add(new KillBlockPath(
+					new Coord(1021,35),
+					new Coord(391,602)).setSize(new Coord(80,80)));
+			temp.add(new KillBlockPath(
+					new Coord(391,602),
+					new Coord(1021,35)).setSize(new Coord(80,80)));
+			temp.add(new KillBlockPath(
+					new Coord(1153,214),
+					new Coord(722,602)).setSize(new Coord(80,80)));
+			temp.add(new KillBlockPath(
+					new Coord(722,602),
+					new Coord(1153,214)).setSize(new Coord(80,80)));
+			temp.add(new KillBlockPath(
+					new Coord(1153,512),
+					new Coord(1054,602)).setSize(new Coord(80,80)));
+			
+			//EXITS
+			temp.add(new Exit(
+					new Coord(1153,601),
+					new Coord(100,100),
+					5
+					));
+			break;
+		case 5:
+			temp = new Map(Color.WHITE, Map.getMiddle().sub(Map.WIDTH / 2,-Player.WIDTH / 2));
+			//EXITS
+			temp.add(new Exit(
+					new Coord(Map.WIDTH - 100, Map.HEIGHT / 4),
+					new Coord(100,Map.HEIGHT / 2),
+					-1).setText("EXIT"));
 		}
 		return temp;
 	}

@@ -98,6 +98,10 @@ public class GameState implements KeyListener {
 					}
 				}
 			}
+		}else{
+			for(SafeBlock sb : currentMap.safeblocks){
+				sb.playerColiding(player);
+			}
 		}
 		return true;
 	}

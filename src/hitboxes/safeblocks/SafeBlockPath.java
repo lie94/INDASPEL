@@ -18,6 +18,7 @@ public class SafeBlockPath extends SafeBlock {
 	 */
 	public SafeBlockPath(Coord ... path){
 		super(path[0]);
+		color = Color.GREEN;
 		if(path.length < 2){
 			throw new IllegalArgumentException("Paths have to have atleast two coordinates");
 		}
