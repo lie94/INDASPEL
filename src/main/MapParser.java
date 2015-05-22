@@ -1,7 +1,6 @@
 package main;
 
 import java.awt.Color;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -156,7 +155,7 @@ public class MapParser {
 			break;
 			
 		case 1:
-			temp = new Map(ImageIO.read(new File("src/res/images/bg3.jpg"))	,new Coord(0,(Map.HEIGHT - Block.HEIGHT) / 2)		);
+			temp = new Map(ImageIO.read(gs.getClass().getResourceAsStream("/res/images/bg3.jpg"))	,new Coord(0,(Map.HEIGHT - Block.HEIGHT) / 2)		);
 			//SAFEBLOCKS
 			temp.add(new SafeBlock(new Coord(-5,521),				//Floor
 					new Coord(Map.WIDTH+10,250)).setColor(new Color(194, 129, 0)));
@@ -214,7 +213,7 @@ public class MapParser {
 			break;
 			
 		case 4:
-			temp = new Map(ImageIO.read(new File("src/res/images/bg4.jpg"))	,new Coord(26,35)		);
+			temp = new Map(ImageIO.read(gs.getClass().getResourceAsStream("/res/images/bg4.jpg"))	,new Coord(26,35)		);
 			//KILLBLOCKS
 			temp.add(new KillBlockPath(
 					new Coord(358,35),
@@ -265,7 +264,7 @@ public class MapParser {
 					));
 			break;
 		case 5:
-			temp = new Map(ImageIO.read(new File("src/res/images/bg5.jpg")), Map.getMiddle().sub(Map.WIDTH / 2,-Player.WIDTH / 2));
+			temp = new Map(ImageIO.read(gs.getClass().getResourceAsStream("/res/images/bg5.jpg")), Map.getMiddle().sub(Map.WIDTH / 2,-Player.WIDTH / 2));
 			//EXITS
 			temp.add(new Exit(
 					new Coord(Map.WIDTH - 100, Map.HEIGHT / 4),
