@@ -14,7 +14,7 @@ import hitboxes.killblocks.KillBlockCycle;
 import hitboxes.killblocks.KillBlockPath;
 import hitboxes.safeblocks.SafeBlock;
 import hitboxes.safeblocks.SafeBlockCycle;
-import hitboxes.safeblocks.SafeBlockPath;
+//import hitboxes.safeblocks.SafeBlockPath;
 import navigation.Coord;
 
 public class MapParser {
@@ -32,7 +32,7 @@ public class MapParser {
 					new Coord(302,720), 
 					-1).setVisible(false));
 			break;
-		case 1:
+		case 2:
 			temp = new Map(ImageIO.read(gs.getClass().getResourceAsStream("/res/images/bg1.jpg"))	,new Coord(0,(Map.HEIGHT - Block.HEIGHT) / 2)		);
 			//SAFEBLOCKS
 			Coord sizeSB = new Coord(Map.WIDTH - (Map.WIDTH) / 12, (720 - 200) / 2);
@@ -70,10 +70,10 @@ public class MapParser {
 			temp.add(new Exit(
 					new Coord((Map.WIDTH * 11)/ 12,sizeSB.Y()),
 					new Coord(Map.WIDTH / 6, 200),
-					2
+					3
 					));
 			break;
-		case 2:
+		case 3:
 			Coord sizeSB2 = new Coord(Map.WIDTH - (Map.WIDTH) / 12, (720 - 200) / 2);
 			temp = new Map(Color.WHITE	,new Coord(0,(Map.HEIGHT - Block.HEIGHT) / 2)		);
 			//SAFEBLOCKS
@@ -99,8 +99,10 @@ public class MapParser {
 			temp.add(new SafeBlock(new Coord(950-15,253+60+60+100),				
 					new Coord(15, 250)).setColor(Color.BLACK));		//mid mid höger spalt nedre
 			
-			temp.add(new SafeBlock(new Coord(445,413),				
-					new Coord(390, 40)).setColor(Color.BLACK));		//ön i mitten av allt
+			//temp.add(new SafeBlock(new Coord(445,413),				
+			//		new Coord(390, 40)).setColor(Color.BLACK));		//ön i mitten av allt
+			temp.add(new KillBlock(new Coord(445,413),				
+					new Coord(390, 40)));		//ön i mitten av allt
 			
 			temp.add(new SafeBlock(new Coord(345,553),				
 					new Coord(930-330+20-30, 160)).setColor(Color.BLACK));		//mid lägre
@@ -149,12 +151,12 @@ public class MapParser {
 			temp.add(new Exit(
 					new Coord((Map.WIDTH * 11)/ 12,sizeSB2.Y()),
 					new Coord(Map.WIDTH / 6, 200),
-					3
+					4
 					));
 			break;
 			
-		case 3:
-			temp = new Map(Color.WHITE,new Coord(0,Map.HEIGHT / 2 - Block.HEIGHT / 2));//ImageIO.read(new File("src/res/images/bg3.jpg"))	,new Coord(0,(Map.HEIGHT - Block.HEIGHT) / 2)		);
+		case 1:
+			temp = new Map(ImageIO.read(new File("src/res/images/bg3.jpg"))	,new Coord(0,(Map.HEIGHT - Block.HEIGHT) / 2)		);
 			//SAFEBLOCKS
 			temp.add(new SafeBlock(new Coord(-5,521),				//Floor
 					new Coord(Map.WIDTH+10,250)).setColor(new Color(194, 129, 0)));
@@ -176,10 +178,14 @@ public class MapParser {
 			temp.add(new SafeBlock(new Coord(1068,497-80+2),				
 					new Coord(80,80)).setColor(new Color(194, 129, 0)));
 			
-			temp.add(new SafeBlock(new Coord(520,44),				
+			/*temp.add(new SafeBlock(new Coord(520,44),				
 					new Coord(80,80)).setColor(new Color(194, 129, 0)));
 			temp.add(new SafeBlock(new Coord(600,44),				
-					new Coord(80,80)).setColor(new Color(194, 129, 0)));
+					new Coord(80,80)).setColor(new Color(194, 129, 0)));*/
+			temp.add(new SafeBlock(new Coord(520,0),				
+					new Coord(80,80 + 44)).setColor(new Color(194, 129, 0)));
+			temp.add(new SafeBlock(new Coord(600,0),				
+					new Coord(80,80 + 44)).setColor(new Color(194, 129, 0)));
 			
 			temp.add(new SafeBlock(new Coord(400,190),				
 					new Coord(80,80)).setColor(new Color(194, 129, 0)));
@@ -195,20 +201,20 @@ public class MapParser {
 					new Coord(720,350),
 					new Coord(820,497-80+2),
 					new Coord(900,350),
-					new Coord(1068-80,497-80+2)).setSize(new Coord(80,80)).setSpeed(Player.SPEED * 3 / 2));
+					new Coord(1068-80,497-80+2)).setSize(new Coord(80,80)).setSpeed(Player.SPEED * 3 / 2 + 1));
 			temp.add(new KillBlockPath(new Coord(480,190),
 					new Coord(560,120),
-					new Coord(720-80,190)).setSize(new Coord(80,80)).setSpeed(Player.SPEED / 3));
+					new Coord(720-80,190)).setSize(new Coord(80,80)).setSpeed(Player.SPEED / 3 + 2));
 			//EXITS
 			temp.add(new Exit(
 					new Coord((Map.WIDTH-80),497-80+2),
 					new Coord(80,80),
-					4
+					2
 					));
 			break;
 			
 		case 4:
-			temp = new Map(Color.WHITE, new Coord(26,35));//ImageIO.read(new File("src/res/images/bg5.jpg"))	,new Coord(26,35)		);
+			temp = new Map(ImageIO.read(new File("src/res/images/bg4.jpg"))	,new Coord(26,35)		);
 			//KILLBLOCKS
 			temp.add(new KillBlockPath(
 					new Coord(358,35),
@@ -237,6 +243,19 @@ public class MapParser {
 			temp.add(new KillBlockPath(
 					new Coord(1153,512),
 					new Coord(1054,602)).setSize(new Coord(80,80)));
+			temp.add(new SafeBlockCycle(
+					new Coord(Map.WIDTH - Block.WIDTH, Map.HEIGHT - Block.HEIGHT),
+					new Coord(Map.WIDTH - Block.WIDTH, 0),
+					new Coord(0,0),
+					new Coord(0,Map.HEIGHT - Block.WIDTH)));
+			temp.add(new SafeBlockCycle(
+					new Coord(0,Map.HEIGHT - Block.WIDTH),
+					new Coord(0,0),
+					new Coord(Map.WIDTH - Block.WIDTH, 0),
+					new Coord(Map.WIDTH - Block.WIDTH, Map.HEIGHT - Block.HEIGHT)));
+					
+					
+					
 			
 			//EXITS
 			temp.add(new Exit(
@@ -246,7 +265,7 @@ public class MapParser {
 					));
 			break;
 		case 5:
-			temp = new Map(Color.WHITE, Map.getMiddle().sub(Map.WIDTH / 2,-Player.WIDTH / 2));
+			temp = new Map(ImageIO.read(new File("src/res/images/bg5.jpg")), Map.getMiddle().sub(Map.WIDTH / 2,-Player.WIDTH / 2));
 			//EXITS
 			temp.add(new Exit(
 					new Coord(Map.WIDTH - 100, Map.HEIGHT / 4),
