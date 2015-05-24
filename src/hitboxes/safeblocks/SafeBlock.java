@@ -43,10 +43,10 @@ public class SafeBlock extends Block{
 	 * @param player
 	 */
 	public boolean playerColiding(Player player){
-		if(!passable && shareHitbox(player)){
+		if(!passable && shareHitbox(player)){	
 			double length1, length2;
 			Coord[] corners = player.getCorners();
-			if(contains(corners[0])){
+			if(contains(corners[0]) || player.contains(getCorners()[2],getCorners()[3])){
 				length1 = corners[0].sub(c.X() + Width()	, corners[0].Y()	).length();
 				length2 = corners[0].sub(corners[0].X()	, c.Y() + Height()	).length();
 				if(length1 > length2){
@@ -54,7 +54,7 @@ public class SafeBlock extends Block{
 				}else{
 					player.setX(c.X() + Width()		);
 				}
-			}else if(contains(corners[1])){
+			}else if(contains(corners[1]) || player.contains(getCorners()[0],getCorners()[3])){
 				length1 = corners[1].sub(c.X()			, corners[1].Y()	).length();
 				length2 = corners[1].sub(corners[1].X()	, c.Y() + Height()	).length();
 				if(length1 > length2){
@@ -62,7 +62,7 @@ public class SafeBlock extends Block{
 				}else{
 					player.setX(c.X()  - player.Width()	);
 				}
-			}else if(contains(corners[2])){
+			}else if(contains(corners[2]) || player.contains(getCorners()[0],getCorners()[1])){
 				length1 = corners[2].sub(c.X()			, corners[2].Y()	).length();
 				length2 = corners[2].sub(corners[2].X()	, c.Y()			).length();
 				if(length1 > length2){
@@ -70,7 +70,7 @@ public class SafeBlock extends Block{
 				}else{
 					player.setX(c.X()  - player.Width()	);
 				}
-			}else if(contains(corners[3])){
+			}else if(contains(corners[3]) || player.contains(getCorners()[2],getCorners()[1])){
 				length1 = corners[3].sub(c.X() + Width()	, corners[3].Y()	).length();
 				length2 = corners[3].sub(corners[3].X()	, c.Y()			).length();
 				if(length1 > length2){

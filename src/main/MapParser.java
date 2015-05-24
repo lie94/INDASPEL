@@ -13,7 +13,6 @@ import hitboxes.killblocks.KillBlockCycle;
 import hitboxes.killblocks.KillBlockPath;
 import hitboxes.safeblocks.SafeBlock;
 import hitboxes.safeblocks.SafeBlockCycle;
-//import hitboxes.safeblocks.SafeBlockPath;
 import navigation.Coord;
 
 public class MapParser {
@@ -21,6 +20,31 @@ public class MapParser {
 		Map temp = null;
 		switch(i){
 		case 0:
+			/*temp = new Map(ImageIO.read(gs.getClass().getResourceAsStream("/res/images/bg0.jpg")),new Coord((Map.WIDTH - Block.WIDTH) / 2, (Map.HEIGHT - Block.WIDTH) / 2));
+			int y = 720 / 3;
+			int dx = 1280 / 5;
+			temp.add(new SafeBlock(new Coord(Map.getMiddle().X() + 400, 0), new Coord(20,100)).setColor(Color.GREEN));
+			temp.add(new SafeBlock(		new Coord(dx - Block.WIDTH					, y	- Block.WIDTH / 2			)).setColor(Color.GREEN));
+			temp.add(new SafeBlockPath(		new Coord(dx								, y - Block.WIDTH / 2			), 
+											new Coord(2 * dx - Block.WIDTH / 2			, y - Block.WIDTH / 2			)));
+			temp.add(new SafeBlockCycle(	new Coord(dx * 3 - (Block.WIDTH * 3) / 2	, y - Block.HEIGHT * (3 / 2)	),
+											new Coord(dx * 3 + Block.WIDTH / 2			, y - Block.HEIGHT * (3 / 2)	),
+											new Coord(dx * 3 + Block.WIDTH / 2			, y + Block.HEIGHT / 2			),
+											new Coord(dx * 3 - (Block.WIDTH * 3) / 2	, y + Block.HEIGHT / 2			)).setSpeed(2 * Block.SPEED));
+			// Killblocks
+			y = 2 * y;
+			temp.add(new KillBlock(	new Coord(dx - Block.WIDTH						, y	- Block.WIDTH / 2			)));
+			temp.add(new KillBlockPath(	new Coord(dx								, y - Block.WIDTH / 2			), 
+											new Coord(2 * dx - Block.WIDTH / 2			, y - Block.WIDTH / 2			)));
+			temp.add(new KillBlockCycle(	new Coord(dx * 3 - (Block.WIDTH * 3) / 2	, y - Block.HEIGHT * (3 / 2)	),
+											new Coord(dx * 3 + Block.WIDTH / 2			, y - Block.HEIGHT * (3 / 2)	),
+											new Coord(dx * 3 + Block.WIDTH / 2			, y + Block.HEIGHT / 2			),
+											new Coord(dx * 3 - (Block.WIDTH * 3) / 2	, y + Block.HEIGHT / 2			)));
+			temp.add(new SafeBlock(Map.getMiddle()));
+			//Exits
+			temp.add(new Exit(new Coord(Map.WIDTH - Block.WIDTH, Map.HEIGHT / 2 - Block.HEIGHT / 2), 2));
+			break;
+			*/
 			temp = new Map(ImageIO.read(gs.getClass().getResourceAsStream("/res/images/bg0.jpg")),new Coord((Map.WIDTH - Block.WIDTH) / 2, (Map.HEIGHT - Block.WIDTH) / 2));
 			temp.add(new Exit(	
 					new Coord(976,0), 							//ULC
@@ -177,9 +201,9 @@ public class MapParser {
 			temp.add(new SafeBlock(new Coord(1068,497-80+2),				
 					new Coord(80,80)).setColor(new Color(194, 129, 0)));
 			
-			/*temp.add(new SafeBlock(new Coord(520,44),				
+			/*temp.add(new SafeBlock(new Coord(520,43),				
 					new Coord(80,80)).setColor(new Color(194, 129, 0)));
-			temp.add(new SafeBlock(new Coord(600,44),				
+			temp.add(new SafeBlock(new Coord(600,43),				
 					new Coord(80,80)).setColor(new Color(194, 129, 0)));*/
 			temp.add(new SafeBlock(new Coord(520,0),				
 					new Coord(80,80 + 44)).setColor(new Color(194, 129, 0)));
@@ -269,7 +293,7 @@ public class MapParser {
 			temp.add(new Exit(
 					new Coord(Map.WIDTH - 100, Map.HEIGHT / 4),
 					new Coord(100,Map.HEIGHT / 2),
-					-1).setText("EXIT"));
+					-1));
 		}
 		return temp;
 	}

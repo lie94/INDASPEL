@@ -5,11 +5,13 @@ import hitboxes.Player;
 import hitboxes.killblocks.KillBlock;
 import hitboxes.safeblocks.SafeBlock;
 
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import navigation.Coord;
 
@@ -18,7 +20,7 @@ public class GameState implements KeyListener {
 	private Map currentMap;
 	private int currentMapIndex;
 	private Player player;
-	private DrawText death;
+	private BufferedImage death;
 	private boolean[] directions; 	/* Upp 		index 0
 									 * H�ger 	index 1
 									 * Ner 		index 2
@@ -30,7 +32,11 @@ public class GameState implements KeyListener {
 	GameState(Run r){
 		player = new Player(new Coord(0,0),new Coord(45,45));
 		directions = new boolean[4];
-		death = new DrawText(Map.getMiddle().add(-Map.WIDTH / 3,0)).setText("You have died. Press space to continue").setFont(new Font("TimeRoman",Font.PLAIN,50));
+		try {
+			death = ImageIO.read(getClass().getResourceAsStream("/res/images/death.png"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		try {
 			currentMap = MapParser.parseMap(this,0);
 		} catch (IOException e) {
@@ -59,7 +65,7 @@ public class GameState implements KeyListener {
 		}
 		//text.draw(g,"" + r.fps);
 		if(player.isDead()){
-			death.draw(g);
+			g.drawImage(death, 0, 0, null);
 		}
 			
 	}

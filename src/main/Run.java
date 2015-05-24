@@ -14,7 +14,7 @@ public class Run extends Canvas implements Runnable{
 	private static final int TARGET_FPS = 60;
 	private final String NAME = "BOC";
 	private final int MAXW = 1280, MAXH = 720;
-	private JFrame frame;
+	JFrame frame; //Can be showed in package
 	private boolean running;
 	private GameState gs;
 	public int fps = 0;
@@ -23,8 +23,7 @@ public class Run extends Canvas implements Runnable{
 	 * @param args
 	 */
 	public static void main(String[] args){
-		//Får spelet att fungera bra på unixbaserade operativsystem
-		//Utan detta blir spelet hackigt
+		//Makes the game run smoother on unixbased operatingsystems
 		if(!System.getProperty("os.name").startsWith("Windows"))
 			System.setProperty("sun.java2d.opengl", "True");
 		new Run().start();

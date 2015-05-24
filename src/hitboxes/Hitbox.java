@@ -40,7 +40,7 @@ public abstract class Hitbox{
 	 * true if all coords are in the hitbox
 	 * false if not all coords are in the hitbox
 	 */
-	protected boolean contains(Coord ... coords){
+	public boolean contains(Coord ... coords){
 		for(Coord p : coords){
 			if(!this.contains(p)){
 				return false;

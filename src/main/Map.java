@@ -88,7 +88,7 @@ public class Map {
 	public void draw(Graphics g){
 		if(background == null){
 			g.setColor(color);
-			g.fillRect(0, 0, Map.WIDTH, Map.HEIGHT);
+			g.fillRect(5, 5, Map.WIDTH, Map.HEIGHT);
 		}else
 			g.drawImage(background,0,0,WIDTH,HEIGHT,null);
 	}
